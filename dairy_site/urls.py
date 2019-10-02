@@ -2,12 +2,13 @@ from django.urls import path,include
 from django.contrib import admin
 from . import settings
 from django.conf.urls.static import static
-# from . import views
+from . import views
 
 urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
-    # path('',)
+    path('',views.homePage,name='homepage'),
+    path('h/',views.secondPage,name='secondpage'),
 ]
 if settings.DEBUG:
     urlpatterns = urlpatterns +  static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

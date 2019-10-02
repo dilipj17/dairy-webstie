@@ -118,3 +118,4 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media')
 LOGIN_URL = 'login'#accounts:login
 LOGOUT_URL = 'logout'
 LOGOUT_REDIRECT_URL = 'login'
+LOGIN_REDIRECT_URL = 'homepage'
