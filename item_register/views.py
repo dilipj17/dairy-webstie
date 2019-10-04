@@ -21,4 +21,6 @@ class CustomerUpdateView(LoginRequiredMixin,UpdateView):
     template_name = 'customer_update.html'
 
 class CustomerDeleteView(LoginRequiredMixin,DeleteView):
-    pass
+    model = Customer
+    success_url = 'items:view_customer'
+    template_name = 'customer_delete.html'
