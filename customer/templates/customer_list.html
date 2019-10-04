@@ -1,7 +1,7 @@
 <h1>Customer</h1>
 <ul>
 {% for customer in object_list %}
-    <li>{{ customer.cust_id }} {{ customer.name }} {{customer.father_or_husband_name}} {{customer.village}} {{customer.mobile_no}} <a href="{%url 'cust:update_customer' customer.id%}">update</a><a href="{%url 'cust:delete_customer' customer.id%}">delete</a></li>
+    <li>{{ customer.cust_id }} {{ customer.name }} {{customer.father_or_husband_name}} {{customer.village}} {{customer.mobile_no}} <a href="{%url 'cust:update_customer' customer.id%}">update</a>  <a href="{%url 'cust:delete_customer' customer.id%}">delete</a></li>
 
 {% empty %}
     <li>No Customers yet.</li>

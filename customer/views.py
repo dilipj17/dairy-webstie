@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views.generic import ListView,CreateView,UpdateView,DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Customer
@@ -17,10 +18,10 @@ class CustomerListView(LoginRequiredMixin,ListView):
 class CustomerUpdateView(LoginRequiredMixin,UpdateView):
     model = Customer
     fields = ['cust_id','name','father_or_husband_name','village','mobile_no']
-    success_url = 'cust:view_customer'
+    success_url = reverse_lazy('cust:view_customer')
     template_name = 'customer_update.html'
 
 class CustomerDeleteView(LoginRequiredMixin,DeleteView):
     model = Customer
-    success_url = 'cust:view_customer'
+    success_url = reverse_lazy('cust:view_customer')
     template_name = 'customer_delete.html'

@@ -15,7 +15,7 @@ class Item_detail(models.Model):
 
 class Bill(models.Model):
     date = models.DateField(default=timezone.now,blank = True)
-    bill_no = models.CharField(max_length=10)
+    bill_no = models.CharField(unique=True,max_length=10)
     customer = models.ForeignKey(Customer,on_delete=models.PROTECT)
     items = models.ManyToManyField(Item_detail)
 

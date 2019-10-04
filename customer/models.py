@@ -8,3 +8,6 @@ class Customer(models.Model):
     father_or_husband_name = models.CharField(max_length=25)
     village = models.CharField(max_length=25)
     mobile_no = models.IntegerField(null=True,blank=True)
+
+    def __str__(self):
+        return str(str(self.cust_id)+" "+str(self.name))
