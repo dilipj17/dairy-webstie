@@ -9,6 +9,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.homePage,name='homepage'),
     path('customer/',include('customer.urls',namespace='cust')),
+    path('item/',include('item_register.urls',namespace='item')),
 ]
 if settings.DEBUG:
     urlpatterns = urlpatterns +  static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

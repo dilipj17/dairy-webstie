@@ -12,16 +12,15 @@ class addCustomer(LoginRequiredMixin,CreateView):
 
 class CustomerListView(LoginRequiredMixin,ListView):
     model = Customer
-    paginate_by = 50
     template_name = 'customer_list.html'
 
 class CustomerUpdateView(LoginRequiredMixin,UpdateView):
     model = Customer
     fields = ['cust_id','name','father_or_husband_name','village','mobile_no']
-    success_url = reverse_lazy('cust:view_customer')
+    success_url = reverse_lazy('cust:view')
     template_name = 'customer_update.html'
 
 class CustomerDeleteView(LoginRequiredMixin,DeleteView):
     model = Customer
-    success_url = reverse_lazy('cust:view_customer')
+    success_url = reverse_lazy('cust:view')
     template_name = 'customer_delete.html'

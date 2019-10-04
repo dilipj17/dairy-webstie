@@ -1,0 +1,9 @@
+<h1>items</h1>
+<ul>
+{% for item in object_list %}
+    <li>{{ item.item_id }} {{ item.name }} <a href="{%url 'item:update' item.id%}">update</a>  <a href="{%url 'item:delete' item.id%}">delete</a></li>
+
+{% empty %}
+    <li>No items yet.</li>
+{% endfor %}
+</ul>
