@@ -1,8 +1,9 @@
 <h1>Customer</h1>
 <ul>
 {% for customer in object_list %}
-    <li>{{ customer.id }} {{ customer.name }} {{customer.father_or_husband_name}} {{customer.village}} {{customer.mobile_no}}</li>
+    <li>{{ customer.cust_id }} {{ customer.name }} {{customer.father_or_husband_name}} {{customer.village}} {{customer.mobile_no}} <a href="{%url 'items:update_customer' customer.id%}">update</a></li>
+
 {% empty %}
-    <li>No articles yet.</li>
+    <li>No Customers yet.</li>
 {% endfor %}
 </ul>

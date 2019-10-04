@@ -3,14 +3,14 @@ from django.utils import timezone
 
 class Customer(models.Model):
     date = models.DateTimeField(auto_now_add=True)
-    id = models.IntegerField(primary_key=True,unique=True)
+    cust_id = models.IntegerField(unique=True,null=True)
     name = models.CharField(max_length=25)
     father_or_husband_name = models.CharField(max_length=25)
     village = models.CharField(max_length=25)
     mobile_no = models.IntegerField(null=True,blank=True)
 
 class Item(models.Model):
-    id = models.IntegerField(primary_key=True,unique=True)
+    item_id = models.IntegerField(unique=True,null=True)
     name = models.CharField(max_length=25)
 
 class Item_detail(models.Model):
