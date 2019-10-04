@@ -8,7 +8,6 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
     path('',views.homePage,name='homepage'),
-    path('h/',views.secondPage,name='secondpage'),
 ]
 if settings.DEBUG:
     urlpatterns = urlpatterns +  static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
