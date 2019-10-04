@@ -1,0 +1,8 @@
+<h1>Customer</h1>
+<ul>
+{% for customer in object_list %}
+    <li>{{ customer.id }} {{ customer.name }} {{customer.father_or_husband_name}} {{customer.village}} {{customer.mobile_no}}</li>
+{% empty %}
+    <li>No articles yet.</li>
+{% endfor %}
+</ul>
