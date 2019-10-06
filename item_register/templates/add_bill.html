@@ -14,21 +14,44 @@
       <form enctype="multipart/form-data" method="POST"  style="background-color:red">
         {% csrf_token %}
         <div class="input-group">
-          {{ form }}
+          {{ form.form }}
             <ul class="btn btn-info" id='add_item'>add item</ul>
           <span class="input-group-btn">
             <button class="btn btn-info" type="submit">submit</button>
           </span>
         </div>
       </form>
+      <div>
+        {{success_message}}
+        <table>
+          {%for item in items %}
+          <tr>
+            <td>{{item.item}}</td>
+            <td>{{item.quantity}}</td>
+            <td>{{item.price}}</td>
+            <td id="" class='item-edit btn' data-id="{% url 'item:edittempitem' item.pk%}"><span class="fa fa-pencil"></span></td>
+            <td id="" class="item-delete btn" data-id="{%url 'item:deletetempitem' item.pk%}"><span class="fa fa-trash"></span></td>
+          </tr>
+            {%endfor%}
+        </table>
+
+             <br>
+
+      </div>
     </div>
   </div>
 </div>
 {%endblock%}
 {%block extra_js %}
-  $(document).ready(function() {
+  $(function() {
     $("#add_item").modalForm({
         formURL: "{% url 'item:addtempitem' %}"
+    });
+    $(".item-edit").each(function () {
+     $(this).modalForm({formURL: $(this).data('id')});
+    });
+    $(".item-delete").each(function () {
+     $(this).modalForm({formURL: $(this).data('id')});
     });
   });
 {%endblock%}

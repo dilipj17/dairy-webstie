@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Item,Bill,temp_Item_detail
 from django import forms
 from customer.models import Customer
-from bootstrap_modal_forms.generic import BSModalCreateView
+from bootstrap_modal_forms.generic import BSModalDeleteView,BSModalUpdateView,BSModalCreateView
 from item_register.forms.temp_item_model import TempItemForm
 
 class AddItem(LoginRequiredMixin,CreateView):
@@ -34,9 +34,10 @@ class AddBill(LoginRequiredMixin,CreateView):
     fields = ['date','bill_no','customer']
     success_url = reverse_lazy('homepage')
 
-    def get_queryset(self):
+    def get_context_data(self,**kwargs):
+        form = super(AddBill, self).get_context_data(**kwargs)
         item = temp_Item_detail.objects.all()
-        return item
+        return {'items':item,'form':form}
 
     def form_valid(self,form):
         form.instance.total_amount = '100'
@@ -45,4 +46,16 @@ class AddBill(LoginRequiredMixin,CreateView):
 class TempItemCreateView(BSModalCreateView):
     template_name = 'add_temp_item.html'
     form_class = TempItemForm
+    success_url = reverse_lazy('item:add_bill')
+
+class TempItemEditView(BSModalUpdateView):
+    model = temp_Item_detail
+    template_name = 'update_temp_item.html'
+    form_class = TempItemForm
+    success_url = reverse_lazy('item:add_bill')
+
+class TempItemDeleteView(BSModalDeleteView):
+    model= temp_Item_detail
+    template_name = 'delete_temp_item.html'
+    success_message = 'item deleted'
     success_url = reverse_lazy('item:add_bill')
