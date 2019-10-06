@@ -7,7 +7,7 @@ class Item(models.Model):
     name = models.CharField(max_length=25)
 
     def __str__(self):
-        return str(self.name)
+        return str(str(self.item_id) +" "+ str(self.name))
 
 class Item_detail(models.Model):
     item = models.ForeignKey(Item,on_delete=models.PROTECT)

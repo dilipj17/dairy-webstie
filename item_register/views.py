@@ -1,7 +1,7 @@
 from django.views.generic import CreateView,ListView,UpdateView,DeleteView,FormView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Item,Bill
+from .models import Item,Bill,temp_Item_detail
 from django import forms
 from customer.models import Customer
 from bootstrap_modal_forms.generic import BSModalCreateView
@@ -32,6 +32,11 @@ class AddBill(LoginRequiredMixin,CreateView):
     model = Bill
     template_name = 'add_bill.html'
     fields = ['date','bill_no','customer']
+    success_url = reverse_lazy('homepage')
+
+    def get_queryset(self):
+        item = temp_Item_detail.objects.all()
+        return item
 
     def form_valid(self,form):
         form.instance.total_amount = '100'
@@ -40,5 +45,4 @@ class AddBill(LoginRequiredMixin,CreateView):
 class TempItemCreateView(BSModalCreateView):
     template_name = 'add_temp_item.html'
     form_class = TempItemForm
-    success_message = "item added"
     success_url = reverse_lazy('item:add_bill')
