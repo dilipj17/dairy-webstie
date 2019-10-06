@@ -15,6 +15,12 @@ class Item_detail(models.Model):
     price = models.IntegerField()
     is_buy = models.BooleanField(default=False)
 
+class temp_Item_detail(models.Model):
+    item = models.ForeignKey(Item,on_delete=models.PROTECT)
+    quantity = models.IntegerField()
+    price = models.IntegerField()
+    is_buy = models.BooleanField(default=False)
+
 
 class Bill(models.Model):
     date = models.DateField(default=timezone.now,blank = True)

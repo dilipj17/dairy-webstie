@@ -1,7 +1,11 @@
-from django.views.generic import CreateView,ListView,UpdateView,DeleteView
+from django.views.generic import CreateView,ListView,UpdateView,DeleteView,FormView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Item
+from .models import Item,Bill
+from django import forms
+from customer.models import Customer
+from bootstrap_modal_forms.generic import BSModalCreateView
+from item_register.forms.temp_item_model import TempItemForm
 
 class AddItem(LoginRequiredMixin,CreateView):
     model = Item
@@ -23,3 +27,18 @@ class DeleteItem(LoginRequiredMixin,DeleteView):
     model = Item
     success_url = reverse_lazy('item:view')
     template_name = 'delete_item.html'
+
+class AddBill(LoginRequiredMixin,CreateView):
+    model = Bill
+    template_name = 'add_bill.html'
+    fields = ['date','bill_no','customer']
+
+    def form_valid(self,form):
+        form.instance.total_amount = '100'
+        return super().form_valid(form)
+
+class TempItemCreateView(BSModalCreateView):
+    template_name = 'add_temp_item.html'
+    form_class = TempItemForm
+    success_message = "item added"
+    success_url = reverse_lazy('item:add_bill')
