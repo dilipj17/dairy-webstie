@@ -1,5 +1,6 @@
 from django.views.generic import CreateView,ListView,UpdateView,DeleteView,FormView
 from django.urls import reverse_lazy
+from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Item,Bill,temp_Item_detail
 from django import forms
@@ -34,14 +35,14 @@ class AddBill(LoginRequiredMixin,CreateView):
     fields = ['date','bill_no','customer']
     success_url = reverse_lazy('homepage')
 
+    def form_valid(self,form):
+        form.instance.total_amount = '100'
+        return super().form_valid(form)
+
     def get_context_data(self,**kwargs):
         form = super(AddBill, self).get_context_data(**kwargs)
         item = temp_Item_detail.objects.all()
         return {'items':item,'form':form}
-
-    def form_valid(self,form):
-        form.instance.total_amount = '100'
-        return super().form_valid(form)
 
 class TempItemCreateView(BSModalCreateView):
     template_name = 'add_temp_item.html'
@@ -59,3 +60,8 @@ class TempItemDeleteView(BSModalDeleteView):
     template_name = 'delete_temp_item.html'
     success_message = 'item deleted'
     success_url = reverse_lazy('item:add_bill')
+
+def NewBill(request):
+    items = temp_Item_detail.objects.all()
+    items.delete()
+    return redirect('item:add_bill')
