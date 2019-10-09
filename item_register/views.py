@@ -1,8 +1,8 @@
 from django.views.generic import CreateView,ListView,UpdateView,DeleteView,FormView
 from django.urls import reverse_lazy
-from django.shortcuts import redirect
+from django.shortcuts import redirect,render
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Item,Bill,temp_Item_detail
+from .models import Item,Bill,temp_Item_detail,Item_detail
 from django import forms
 from customer.models import Customer
 from bootstrap_modal_forms.generic import BSModalDeleteView,BSModalUpdateView,BSModalCreateView
@@ -36,8 +36,21 @@ class AddBill(LoginRequiredMixin,CreateView):
     success_url = reverse_lazy('homepage')
 
     def form_valid(self,form):
-        form.instance.total_amount = '100'
-        return super().form_valid(form)
+        items = temp_Item_detail.objects.all()
+        bill = form.save()
+        total_amount = 0
+        for item in items:
+            total_amount += (item.price*item.quantity)
+            temp = Item_detail.objects.create(
+                item = item.item,
+                quantity =item.quantity,
+                price = item.price,
+                is_buy = item.is_buy
+            )
+            bill.items.add(temp)
+        bill.total_amount = total_amount
+        bill.save()
+        return redirect('homepage')
 
     def get_context_data(self,**kwargs):
         form = super(AddBill, self).get_context_data(**kwargs)

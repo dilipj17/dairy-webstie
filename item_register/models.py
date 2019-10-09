@@ -27,7 +27,7 @@ class Bill(models.Model):
     bill_no = models.CharField(unique=True,max_length=10)
     customer = models.ForeignKey(Customer,on_delete=models.PROTECT)
     items = models.ManyToManyField(Item_detail)
-    total_amount = models.IntegerField()
+    total_amount = models.IntegerField(blank=True,null=True)
 
 
 class Item_stock(models.Model):
