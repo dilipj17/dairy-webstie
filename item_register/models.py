@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 from customer.models import Customer
+from django.db.models.signals import pre_delete,post_save
+from django.dispatch import receiver
 
 class Item(models.Model):
     item_id = models.IntegerField(unique=True,null=True)
@@ -34,3 +36,20 @@ class Item_stock(models.Model):
     item = models.ForeignKey(Item,on_delete=models.PROTECT)
     recent_stock = models.IntegerField()
     quantity_left = models.IntegerField()
+
+
+@receiver(pre_delete,sender=Bill)
+def removeItemsOfBills(sender,**kwargs):
+    data = kwargs['instance']
+    for item in data.items.all():
+        Item_detail.objects.get(id = item.pk).delete()
+
+@receiver(post_save,sender=Item)
+def stockUpdate(sender,**kwargs):
+    if kwargs['created']:
+        data = kwargs['instance']
+        Item_stock.objects.create(
+            item = data,
+            recent_stock = 0,
+            quantity_left = 0
+        )

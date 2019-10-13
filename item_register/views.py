@@ -56,6 +56,15 @@ class AddBill(LoginRequiredMixin,CreateView):
         item = temp_Item_detail.objects.all()
         return {'items':item,'form':form}
 
+class ViewBill(LoginRequiredMixin,ListView):
+    model = Bill
+    template_name = 'viewbill.html'
+
+class DeleteBill(LoginRequiredMixin,DeleteView):
+    model = Bill
+    template_name = 'delete_bill.html'
+    success_url = reverse_lazy('item:view_bill')
+
 class TempItemCreateView(BSModalCreateView):
     template_name = 'add_temp_item.html'
     form_class = TempItemForm
