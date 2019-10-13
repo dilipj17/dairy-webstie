@@ -4,4 +4,4 @@ from bootstrap_modal_forms.forms import BSModalForm
 class TempItemForm(BSModalForm):
     class Meta:
         model = temp_Item_detail
-        fields = ['item', 'quantity', 'price','is_buy']
+        fields = ['item', 'quantity', 'price']

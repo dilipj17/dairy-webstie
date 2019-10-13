@@ -13,13 +13,11 @@ class Item_detail(models.Model):
     item = models.ForeignKey(Item,on_delete=models.PROTECT)
     quantity = models.IntegerField()
     price = models.IntegerField()
-    is_buy = models.BooleanField(default=False)
 
 class temp_Item_detail(models.Model):
     item = models.ForeignKey(Item,on_delete=models.PROTECT)
     quantity = models.IntegerField()
     price = models.IntegerField()
-    is_buy = models.BooleanField(default=False)
 
 
 class Bill(models.Model):
@@ -28,6 +26,7 @@ class Bill(models.Model):
     customer = models.ForeignKey(Customer,on_delete=models.PROTECT)
     items = models.ManyToManyField(Item_detail)
     total_amount = models.IntegerField(blank=True,null=True)
+    is_buy = models.BooleanField(default=False)
 
 
 class Item_stock(models.Model):
