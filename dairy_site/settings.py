@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'item_register',
     'customer',
     'bootstrap_modal_forms',
+    'payment'
 ]
 
 MIDDLEWARE = [
