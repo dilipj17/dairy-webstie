@@ -45,7 +45,7 @@ def removeItemsOfBills(sender,**kwargs):
         Item_detail.objects.get(id = item.pk).delete()
 
 @receiver(post_save,sender=Item)
-def stockUpdate(sender,**kwargs):
+def stockItemAdd(sender,**kwargs):
     if kwargs['created']:
         data = kwargs['instance']
         Item_stock.objects.create(
@@ -53,3 +53,16 @@ def stockUpdate(sender,**kwargs):
             recent_stock = 0,
             quantity_left = 0
         )
+
+@receiver(post_save,sender=Bill)
+def stockUpdate(sender,**kwargs):
+    if kwargs['created']:
+        obj = kwargs['instance']
+        for item in obj.items.all():
+            stock = Item_stock.objects.get(item = item.item)
+            if obj.is_buy:
+                stock.date_stock_update = obj.date
+                stock.recent_stock = item.quantity
+                stock.quantity_left += item.quantity
+            else:
+                stock.quantity_left -= item.quantity
