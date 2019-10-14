@@ -55,9 +55,8 @@ def stockUpdate(sender,**kwargs):
         for item in temp_Item_detail.objects.all():
             stock = Item_stock.objects.get(item = item.item)
             if obj.is_buy:
-                if stock.quantity_left == 0:
-                    stock.date_stock_update = obj.date
-                    stock.recent_stock = item.quantity
+                stock.date_stock_update = obj.date
+                stock.recent_stock = item.quantity
                 stock.quantity_left += item.quantity
             else:
                 stock.quantity_left -= item.quantity
@@ -66,12 +65,16 @@ def stockUpdate(sender,**kwargs):
 @receiver(pre_delete,sender=Bill)
 def updateStockOnBill(sender,**kwargs):
     obj = kwargs['instance']
+    print(obj)
     for item in obj.items.all():
+        print(item)
         stock = Item_stock.objects.get(item = item.item)
+        print(stock)
         if obj.is_buy:
             stock.quantity_left -= item.quantity
         else:
             stock.quantity_left += item.quantity
+        stock.save()
 
 @receiver(pre_delete,sender=Bill)
 def removeItemsOfBills(sender,**kwargs):
