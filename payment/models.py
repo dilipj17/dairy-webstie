@@ -6,7 +6,7 @@ class Transections(models.Model):
     date = models.DateField(default=timezone.now,blank=True)
     trans_id = models.CharField(max_length=10,unique=True,null=True)
     customer = models.ForeignKey(Customer,on_delete=models.PROTECT)
-    take_money = models.BooleanField(default=False)
+    credit = models.BooleanField(default=False)
     amount = models.IntegerField()
     remarks = models.CharField(max_length=255,blank=True,null=True)
 
