@@ -14,4 +14,5 @@ urlpatterns = [
     path('newbill/',views.NewBill,name='new_bill'),
     path('viewbills/',views.ViewBill.as_view(),name='view_bill'),
     path('deltebills/<int:pk>',views.DeleteBill.as_view(),name='delete_bill'),
+    # path('stockregister/',views.StockRegister,name='stock_register'),
 ]

@@ -1,7 +1,7 @@
 <h1>Bills</h1>
 <ul>
 {% for bill in object_list %}
-    <li>{{ bill.date }} {{ bill.bill_no }} {{bill.customer}} {{bill.total_amount}}{{bill.is_buy}} <a href="{%url 'item:delete_bill' bill.id%}">delete</a>
+    <li>{{ bill.date }} {{ bill.bill_no }} {{bill.customer}} {{bill.total_amount}}{{bill.is_buy}} {{bill.remarks}} <a href="{%url 'item:delete_bill' bill.id%}">delete</a>
       <ul>
         {% for obj_list in bill.items.all%}
         <li>{{obj_list.item}} {{ obj_list.quantity}} {{obj_list.price}}</li>

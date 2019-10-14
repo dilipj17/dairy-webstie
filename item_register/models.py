@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from customer.models import Customer
-from django.db.models.signals import pre_delete,post_save,pre_save
+from django.db.models.signals import pre_delete,post_save,pre_save,pre_delete
 from django.dispatch import receiver
 
 class Item(models.Model):
@@ -29,6 +29,7 @@ class Bill(models.Model):
     items = models.ManyToManyField(Item_detail)
     total_amount = models.IntegerField(blank=True,null=True)
     is_buy = models.BooleanField(default=False)
+    remarks = models.CharField(max_length=255,blank=True,null=True)
 
 
 class Item_stock(models.Model):
@@ -65,11 +66,8 @@ def stockUpdate(sender,**kwargs):
 @receiver(pre_delete,sender=Bill)
 def updateStockOnBill(sender,**kwargs):
     obj = kwargs['instance']
-    print(obj)
     for item in obj.items.all():
-        print(item)
         stock = Item_stock.objects.get(item = item.item)
-        print(stock)
         if obj.is_buy:
             stock.quantity_left -= item.quantity
         else:

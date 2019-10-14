@@ -32,7 +32,7 @@ class DeleteItem(LoginRequiredMixin,DeleteView):
 class AddBill(LoginRequiredMixin,CreateView):
     model = Bill
     template_name = 'add_bill.html'
-    fields = ['date','bill_no','customer','is_buy']
+    fields = ['date','bill_no','customer','is_buy','remarks']
     success_url = reverse_lazy('homepage')
 
     def form_valid(self,form):
