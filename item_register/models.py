@@ -37,13 +37,6 @@ class Item_stock(models.Model):
     recent_stock = models.IntegerField()
     quantity_left = models.IntegerField()
 
-
-@receiver(pre_delete,sender=Bill)
-def removeItemsOfBills(sender,**kwargs):
-    data = kwargs['instance']
-    for item in data.items.all():
-        Item_detail.objects.get(id = item.pk).delete()
-
 @receiver(post_save,sender=Item)
 def stockItemAdd(sender,**kwargs):
     if kwargs['created']:
@@ -61,11 +54,27 @@ def stockUpdate(sender,**kwargs):
         obj = Bill.objects.get(id=data.id)
         for item in temp_Item_detail.objects.all():
             stock = Item_stock.objects.get(item = item.item)
-            print(stock.item.name)
             if obj.is_buy:
-                stock.date_stock_update = obj.date
-                stock.recent_stock = item.quantity
+                if stock.quantity_left == 0:
+                    stock.date_stock_update = obj.date
+                    stock.recent_stock = item.quantity
                 stock.quantity_left += item.quantity
             else:
                 stock.quantity_left -= item.quantity
             stock.save()
+
+@receiver(pre_delete,sender=Bill)
+def updateStockOnBill(sender,**kwargs):
+    obj = kwargs['instance']
+    for item in obj.items.all():
+        stock = Item_stock.objects.get(item = item.item)
+        if obj.is_buy:
+            stock.quantity_left -= item.quantity
+        else:
+            stock.quantity_left += item.quantity
+
+@receiver(pre_delete,sender=Bill)
+def removeItemsOfBills(sender,**kwargs):
+    data = kwargs['instance']
+    for item in data.items.all():
+        Item_detail.objects.get(id = item.pk).delete()
