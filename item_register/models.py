@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from customer.models import Customer
-from django.db.models.signals import pre_delete,post_save
+from django.db.models.signals import pre_delete,post_save,pre_save
 from django.dispatch import receiver
 
 class Item(models.Model):
@@ -57,12 +57,15 @@ def stockItemAdd(sender,**kwargs):
 @receiver(post_save,sender=Bill)
 def stockUpdate(sender,**kwargs):
     if kwargs['created']:
-        obj = kwargs['instance']
-        for item in obj.items.all():
+        data = kwargs['instance']
+        obj = Bill.objects.get(id=data.id)
+        for item in temp_Item_detail.objects.all():
             stock = Item_stock.objects.get(item = item.item)
+            print(stock.item.name)
             if obj.is_buy:
                 stock.date_stock_update = obj.date
                 stock.recent_stock = item.quantity
                 stock.quantity_left += item.quantity
             else:
                 stock.quantity_left -= item.quantity
+            stock.save()
