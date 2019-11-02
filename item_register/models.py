@@ -56,7 +56,6 @@ def stockUpdate(sender,**kwargs):
         for item in temp_Item_detail.objects.all():
             stock = Item_stock.objects.get(item = item.item)
             if obj.is_buy:
-                stock.date_stock_update = obj.date
                 stock.recent_stock = item.quantity
                 stock.quantity_left += item.quantity
             else:

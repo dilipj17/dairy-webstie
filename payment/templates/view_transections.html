@@ -1,7 +1,7 @@
 <h1>Transection</h1>
 <ul>
 {% for trans in object_list %}
-    <li>{{trans.date}} {{trans.trans_id}} {{trans.customer}} {{trans.credit}} {{trans.amount}} {{trans.remarks}}</li>
+    <li>{{trans.date}} {{trans.trans_id}} {{trans.customer}} {{trans.credit}} {{trans.amount}} {{trans.remarks}} <a href="{%url 'payment:delete' trans.id%}">delete</a></li>
 {% empty %}
   <li>No Transection yet.</li>
 {% endfor %}
