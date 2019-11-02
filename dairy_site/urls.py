@@ -11,6 +11,7 @@ urlpatterns = [
     path('customer/',include('customer.urls',namespace='cust')),
     path('item/',include('item_register.urls',namespace='item')),
     path('pay/',include('payment.urls',namespace='payment')),
+    path('report/',include('reports.urls',namespace='report')),
 ]
 if settings.DEBUG:
     urlpatterns = urlpatterns +  static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
