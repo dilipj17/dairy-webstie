@@ -3,5 +3,6 @@ from . import views
 
 app_name = 'payment'
 urlpatterns = [
-    path('pay/',views.MakePayment,name='pay'),
+    path('pay/',views.AddTransection.as_view(),name='pay'),
+    path('view/',views.ViewTransection.as_view(),name='view'),
 ]

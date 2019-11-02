@@ -1,0 +1,8 @@
+<h1>Transection</h1>
+<ul>
+{% for trans in object_list %}
+    <li>{{trans.date}} {{trans.trans_id}} {{trans.customer}} {{trans.credit}} {{trans.amount}} {{trans.remarks}}</li>
+{% empty %}
+  <li>No Transection yet.</li>
+{% endfor %}
+</ul>
