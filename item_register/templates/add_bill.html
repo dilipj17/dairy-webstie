@@ -1,57 +1,56 @@
-{%extends 'base_templates/base.html'%}
-{% block content%}
-<div class="modal fade" tabindex="-1" role="dialog" id="modal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-
-    </div>
+{% load static %}
+<script src="{%static 'vendor/jquery/jquery-3.2.1.min.js'%}"></script>
+<h3 class="text-center">Add item</h3>
+<form enctype="multipart/form-data" method="POST">
+  {% csrf_token %}
+  <div class="input-group">
+    {{ form.form }}
+      <a href="#" onclick="openwindow(0,0)">add item</a>
+    <span>
+      <button class="btn btn-info" type="submit">submit</button>
+    </span>
   </div>
+</form>
+<div>
+    <table>
+      {%for item in items %}
+      <tr>
+        <td>{{item.item}}</td>
+        <td>{{item.quantity}}</td>
+        <td>{{item.price}}</td>
+        <td><a href='#' onclick="openwindow(1,{{item.pk}})" id="{{item.pk}}-update" data-url="{%url 'item:edittempitem' item.pk %}">update</a></td>
+        <td><a href='#' onclick="openwindow(2,{{item.pk}})" id="{{item.pk}}-delete" data-url="{%url 'item:deletetempitem' item.pk %}">delete</a></td>
+      </tr>
+        {%endfor%}
+    </table>
+  <br>
+  <div id="data"></div>
 </div>
-<div class="container mt-4 mr-0">
-  <div class="row">
-    <div class="col-lg-6 col-lg-offset-3 login form-submit">
-      <h3 class="text-center">Add item</h3>
-      <form enctype="multipart/form-data" method="POST"  style="background-color:red">
-        {% csrf_token %}
-        <div class="input-group">
-          {{ form.form }}
-            <ul class="btn btn-info" id='add_item'>add item</ul>
-          <span class="input-group-btn">
-            <button class="btn btn-info" type="submit">submit</button>
-          </span>
-        </div>
-      </form>
-      <div>
-        {{success_message}}
-        <table>
-          {%for item in items %}
-          <tr>
-            <td>{{item.item}}</td>
-            <td>{{item.quantity}}</td>
-            <td>{{item.price}}</td>
-            <td id="" class='item-edit btn' data-id="{% url 'item:edittempitem' item.pk%}"><span class="fa fa-pencil"></span></td>
-            <td id="" class="item-delete btn" data-id="{%url 'item:deletetempitem' item.pk%}"><span class="fa fa-trash"></span></td>
-          </tr>
-            {%endfor%}
-        </table>
-
-             <br>
-
-      </div>
-    </div>
-  </div>
-</div>
-{%endblock%}
-{%block extra_js %}
-  $(function() {
-    $("#add_item").modalForm({
-        formURL: "{% url 'item:addtempitem' %}"
-    });
-    $(".item-edit").each(function () {
-     $(this).modalForm({formURL: $(this).data('id')});
-    });
-    $(".item-delete").each(function () {
-     $(this).modalForm({formURL: $(this).data('id')});
-    });
-  });
-{%endblock%}
+<script type="text/javascript">
+  function openwindow(i,id){
+    var url;
+    if (i==0) {
+      url = "{%url 'item:addtempitem'%}";
+    }
+    else if (i==1) {
+      var opt = document.getElementById(id+'-update');
+      url = opt.dataset.url;
+    }
+    else {
+      var opt = document.getElementById(id+'-delete');
+      url = opt.dataset.url;
+    }
+    newwindow = window.open(url,"Form","width=500,height=500,left=400,top=400");
+  }
+  function loadData(){
+    $.ajax(
+      {
+        type:"GET",
+        url:"{%url 'item:list'%}",
+        success:function(data){
+          $('#data').html(data);
+        }
+      }
+    )
+  }
+</script>

@@ -1,11 +1,11 @@
-{%extends 'base_templates/base.html'%}
-{%block content%}
 <form method="post">
     {% csrf_token %}
     <p>Are you sure you want to delete "{{ object }}"?</p>
-    <div class="modal-footer">
-      <input type="submit" class="btn btn-danger" value="Confirm">
-      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-    </div>
+    <button type="submit" onclick="closewin()">delete</button>
 </form>
-{%endblock%}
+<script type="text/javascript">
+  function closewin(){
+    window.opener.loadData();
+    window.close()
+  }
+</script>

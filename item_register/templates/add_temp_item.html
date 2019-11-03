@@ -1,13 +1,12 @@
-{%extends 'base_templates/base.html'%}
-{% block content %}
 <h>add item</h>
 <form method="post">
   {% csrf_token %}
   {{form}}
-  <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-    <button type="button" class="submit-btn btn btn-primary">Create</button>
-  </div>
+  <button type="submit" onclick="closewin()">Create</button>
 </form>
-
-{%endblock%}
+<script type="text/javascript">
+  function closewin(){
+    window.opener.loadData();
+    window.close();
+  }
+</script>

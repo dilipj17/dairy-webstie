@@ -23,11 +23,11 @@
           <td>{{trans.trans_id}}</td>
           <td>{{trans.customer}}</td>
           {%if trans.credit%}
-            <td id="{{forloop.counter}}-amount">{{trans.amount}}</td>
+            <td id="{{forloop.counter}}-amount" data-credit="1" data-amount='{{trans.amount}}'>{{trans.amount}}</td>
             <td></td>
           {%else%}
             <td></td>
-            <td id="{{forloop.counter}}-amount">{{trans.amount}}</td>
+            <td id="{{forloop.counter}}-amount" data-credit="0" data-amount='{{trans.amount}}'>{{trans.amount}}</td>
           {%endif%}
           <td>{{trans.remarks}}</td>
           <td id='{{forloop.counter}}-balance'></td>
@@ -35,9 +35,5 @@
       {%endfor%}
     </tbody>
   </table>
-  <script type="text/javascript">
-    var item = 1;
-    
-
-  </script>
+  <script src="{%static 'customer/balanceupdate.js'%}"></script>
 </body>

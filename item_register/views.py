@@ -5,10 +5,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Item,Bill,temp_Item_detail,Item_detail
 from django import forms
 from customer.models import Customer
-from bootstrap_modal_forms.generic import BSModalDeleteView,BSModalUpdateView,BSModalCreateView
-from item_register.forms.temp_item_model import TempItemForm
 from payment.models import Balance,Transections
-
+from django.http import HttpResponse,JsonResponse
+from django.core import serializers
 class AddItem(LoginRequiredMixin,CreateView):
     model = Item
     template_name = 'add_item.html'
@@ -74,18 +73,19 @@ class DeleteBill(LoginRequiredMixin,DeleteView):
     template_name = 'delete_bill.html'
     success_url = reverse_lazy('item:view_bill')
 
-class TempItemCreateView(BSModalCreateView):
+class TempItemCreateView(CreateView):
     template_name = 'add_temp_item.html'
-    form_class = TempItemForm
+    model = temp_Item_detail
+    fields = ['item','quantity','price']
     success_url = reverse_lazy('item:add_bill')
 
-class TempItemEditView(BSModalUpdateView):
+class TempItemEditView(UpdateView):
     model = temp_Item_detail
     template_name = 'update_temp_item.html'
-    form_class = TempItemForm
+    fields = ['item','quantity','price']
     success_url = reverse_lazy('item:add_bill')
 
-class TempItemDeleteView(BSModalDeleteView):
+class TempItemDeleteView(DeleteView):
     model= temp_Item_detail
     template_name = 'delete_temp_item.html'
     success_message = 'item deleted'
@@ -95,3 +95,10 @@ def NewBill(request):
     items = temp_Item_detail.objects.all()
     items.delete()
     return redirect('item:add_bill')
+
+def updateList(request):
+    if request.method == 'GET':
+        query = temp_Item_detail.objects.all()
+        data = serializers.serialize('json',query)
+        return HttpResponse(data)
+    return JsonResponse({'error':'some problem with server RETRY!'})
