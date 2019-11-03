@@ -3,5 +3,6 @@ from . import views
 
 app_name = 'reports'
 urlpatterns = [
-    path('',views.testpage,name='report')
+    path('',views.LedgerQueryView.as_view(),name='report'),
+    path('ledger/',views.ledgerView,name='list'),
 ]

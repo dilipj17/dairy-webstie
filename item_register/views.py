@@ -7,7 +7,7 @@ from django import forms
 from customer.models import Customer
 from bootstrap_modal_forms.generic import BSModalDeleteView,BSModalUpdateView,BSModalCreateView
 from item_register.forms.temp_item_model import TempItemForm
-from payment.models import Balance
+from payment.models import Balance,Transections
 
 class AddItem(LoginRequiredMixin,CreateView):
     model = Item
@@ -50,12 +50,14 @@ class AddBill(LoginRequiredMixin,CreateView):
             bill.items.add(temp)
         bill.total_amount = total_amount
         bill.save()
-        balance = Balance.objects.get(customer=bill.customer)
-        if bill.is_buy:
-            balance.balance += total_amount
-        else:
-            balance.balance -= total_amount
-        balance.save()
+        Transections.objects.create(
+            date = bill.date,
+            trans_id = 'BL'+str(bill.bill_no),
+            customer = bill.customer,
+            credit = bill.is_buy,
+            amount = bill.total_amount,
+            remarks = bill.remarks
+        )
         return redirect('homepage')
 
     def get_context_data(self,**kwargs):

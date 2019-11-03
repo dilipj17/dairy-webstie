@@ -1,0 +1,6 @@
+<h>Customer Ledger</h>
+<body>
+  {%for trans in transection%}
+    <li>{{trans.date}}{{trans.trans_id}}{{trans.customer}}{{trans.credit}}{{trans.amount}}{{trans.remarks}}</li>
+  {%endfor%}
+</body>

@@ -49,15 +49,10 @@ def updateBalance(sender,**kwargs):
             balance.balance += obj.amount
         else:
             balance.balance -= obj.amount
-        balance.save()        
+        balance.save()
 
 @receiver(pre_delete,sender=Bill)
 def billbalanceremove(sender,**kwargs):
     data = kwargs['instance']
     obj = Bill.objects.get(id=data.id)
-    balance = Balance.objects.get(customer=obj.customer)
-    if obj.is_buy:
-        balance.balance -= obj.total_amount
-    else:
-        balance.balance += obj.total_amount
-    balance.save()
+    Transections.objects.get(trans_id = 'BL'+str(obj.bill_no)).delete()
