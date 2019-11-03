@@ -1,6 +1,43 @@
+<head>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{%static 'vendor/bootstrap/css/bootstrap.min.css'%}">
+</head>
 <h>Customer Ledger</h>
 <body>
-  {%for trans in transection%}
-    <li>{{trans.date}}{{trans.trans_id}}{{trans.customer}}{{trans.credit}}{{trans.amount}}{{trans.remarks}}</li>
-  {%endfor%}
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">ID</th>
+        <th scope="col">Customer</th>
+        <th scope="col">Credit</th>
+        <th scope="col">Debit</th>
+        <th scope="col">Remarks</th>
+        <th scope="col">Balance</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%for trans in transection%}
+        <tr>
+          <td>{{trans.date}}</td>
+          <td>{{trans.trans_id}}</td>
+          <td>{{trans.customer}}</td>
+          {%if trans.credit%}
+            <td id="{{forloop.counter}}-amount">{{trans.amount}}</td>
+            <td></td>
+          {%else%}
+            <td></td>
+            <td id="{{forloop.counter}}-amount">{{trans.amount}}</td>
+          {%endif%}
+          <td>{{trans.remarks}}</td>
+          <td id='{{forloop.counter}}-balance'></td>
+        </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+  <script type="text/javascript">
+    var item = 1;
+    
+
+  </script>
 </body>

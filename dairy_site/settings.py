@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'bootstrap_modal_forms',
     'payment',
     'reports',
+    'mathfilters',
 ]
 
 MIDDLEWARE = [
