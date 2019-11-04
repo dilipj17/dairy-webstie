@@ -9,7 +9,7 @@
             <div class="row">
               <div class="col-sm-6">
                 <div class="card bg-danger mb-3" style="max-width: 18rem;">
-                  <div class="card-body text-center" style="cursor:pointer">
+                  <div class="card-body text-center">
                     <a href="{%url 'cust:view'%}" class="text-white ">
                       <h5 class="card-title"><i class="fa fa-group" style="font-size:24px"></i></h5>
                       <p class="card-text">customer</p>
@@ -31,7 +31,7 @@
             <div class="row">
               <div class="col-sm-6">
                 <div class="card bg-primary mb-3" style="max-width: 18rem;">
-                  <div class="card-body text-center" style="cursor:pointer">
+                  <div class="card-body text-center">
                     <a href="{%url 'item:new_bill'%}" class=" text-white">
                       <h5 class="card-title"><i class="fa fa-file-text" style="font-size:24px"></i></h5>
                       <p class="card-text">Bill</p>
@@ -41,12 +41,44 @@
               </div>
               <div class="col-sm-6">
                 <div class="card  bg-primary mb-3" style="max-width: 18rem;">
-                  <div class="card-body text-center" style="cursor:pointer">
+                  <div class="card-body text-center">
                     <a href="{%url 'payment:pay'%}" class="text-white">
                       <h5 class="card-title"><i class="fa fa-rupee" style="font-size:24px"></i></h5>
                       <p class="card-text">Payment</p>
                     </a>
                   </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="card  bg-info mb-3" style="max-width: 18rem;">
+                  <div class="card-header mb-3">
+                    <div class="text-white text-center">
+                      <h5 class="card-title"><i class="fa fa-strikethrough" style="font-size:24px"></i></h5>
+                      <p class="card-text">Shortcuts</p>
+                    </div>
+                  </div>
+                  <ul class="list-group pl-2 pb-3" style="list-style: none;">
+                    <li><a href="#" class="text-white">Add Weekly Payment</a></li>
+                    <li><a href="#" class="text-white">Add New Stock</a></li>
+                    <li><a href="#" class="text-white">--------</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="card  bg-info mb-3" style="max-width: 18rem;">
+                  <div class="card-header mb-3">
+                    <div class="text-white text-center">
+                      <h5 class="card-title"><i class="fa fa-paperclip" style="font-size:24px"></i></h5>
+                      <p class="card-text">Report</p>
+                    </div>
+                  </div>
+                  <ul class="list-group pl-2 pb-3" style="list-style: none;">
+                    <li><a href="{%url 'item:view_bill'%}" class="text-white">Stock Report</a></li>
+                    <li><a href="{%url 'payment:view'%}" class="text-white">Payment Report</a></li>
+                    <li><a href="{%url 'report:report'%}" class="text-white">Customer Ledger</a></li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -65,7 +97,7 @@
 <a href="{%url 'item:add'%}">add item</a> <br>
 <a href="">view item</a> <br>
 <a href="{%url 'item:new_bill'%}">add bill</a> <br>
-<a href="{%url 'item:view_bill'%}">view bill</a> <br>
+<a href="">view bill</a> <br>
 <a href="">payment</a> <br>
 <a href="{%url 'payment:view'%}"> view payment</a> <br>
 <a href="{%url 'report:report'%}"> view report</a> <br> -->
