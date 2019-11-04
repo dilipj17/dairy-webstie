@@ -1,12 +1,71 @@
 {%extends 'base_templates/base.html'%}
 {%block content%}
-<a href="{%url 'cust:add'%}">add customer</a> <br>
-<a href="{%url 'cust:view'%}">view customer</a> <br>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-8">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="card bg-danger mb-3" style="max-width: 18rem;">
+                  <div class="card-body text-center" style="cursor:pointer">
+                    <a href="{%url 'cust:view'%}" class="text-white ">
+                      <h5 class="card-title"><i class="fa fa-group" style="font-size:24px"></i></h5>
+                      <p class="card-text">customer</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="card  bg-danger mb-3" style="max-width: 18rem;">
+                  <div class="card-body text-center">
+                    <a href="{%url 'item:view'%}" class="text-white">
+                      <h5 class="card-title"><i class="fa fa-list-alt" style="font-size:24px"></i></h5>
+                      <p class="card-text">item</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="card bg-primary mb-3" style="max-width: 18rem;">
+                  <div class="card-body text-center" style="cursor:pointer">
+                    <a href="{%url 'item:new_bill'%}" class=" text-white">
+                      <h5 class="card-title"><i class="fa fa-file-text" style="font-size:24px"></i></h5>
+                      <p class="card-text">Bill</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="card  bg-primary mb-3" style="max-width: 18rem;">
+                  <div class="card-body text-center" style="cursor:pointer">
+                    <a href="{%url 'payment:pay'%}" class="text-white">
+                      <h5 class="card-title"><i class="fa fa-rupee" style="font-size:24px"></i></h5>
+                      <p class="card-text">Payment</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            stock segment
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-2"></div>
+    </div>
+  </div>
+{%endblock%}
+<!-- <a href="{%url 'cust:add'%}">add customer</a> <br>
+<a href="">view customer</a> <br>
 <a href="{%url 'item:add'%}">add item</a> <br>
-<a href="{%url 'item:view'%}">view item</a> <br>
+<a href="">view item</a> <br>
 <a href="{%url 'item:new_bill'%}">add bill</a> <br>
 <a href="{%url 'item:view_bill'%}">view bill</a> <br>
-<a href="{%url 'payment:pay'%}">payment</a> <br>
+<a href="">payment</a> <br>
 <a href="{%url 'payment:view'%}"> view payment</a> <br>
-<a href="{%url 'report:report'%}"> view report</a> <br>
-{%endblock%}
+<a href="{%url 'report:report'%}"> view report</a> <br> -->
