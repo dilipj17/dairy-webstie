@@ -1,10 +1,4 @@
 <form method="post">{% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" onclick="closewin()">update</button>
+    <button type="submit">update</button>
 </form>
-<script type="text/javascript">
-  function closewin(){
-    window.opener.loadData();
-    window.close()
-  }
-</script>

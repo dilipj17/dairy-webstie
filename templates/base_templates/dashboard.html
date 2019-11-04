@@ -1,3 +1,5 @@
+{%extends 'base_templates/base.html'%}
+{%block content%}
 <a href="{%url 'cust:add'%}">add customer</a> <br>
 <a href="{%url 'cust:view'%}">view customer</a> <br>
 <a href="{%url 'item:add'%}">add item</a> <br>
@@ -7,4 +9,4 @@
 <a href="{%url 'payment:pay'%}">payment</a> <br>
 <a href="{%url 'payment:view'%}"> view payment</a> <br>
 <a href="{%url 'report:report'%}"> view report</a> <br>
-</script>
+{%endblock%}

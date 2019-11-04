@@ -1,39 +1,20 @@
-{% load static %}
+{%load static%}
 <!DOCTYPE html>
-<html lang="en">
-<head>
-	<title>{% block head %}{% endblock %}</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
-	<link rel="stylesheet" type="text/css" href="{%static 'vendor/bootstrap/css/bootstrap.min.css'%}">
-	<link rel="stylesheet" type="text/css" href="{%static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css'%}">
-	<link rel="stylesheet" type="text/css" href="{%static 'vendor/animate/animate.css'%}">
-	<link rel="stylesheet" type="text/css" href="{%static 'vendor/css-hamburgers/hamburgers.min.css'%}">
-	<link rel="stylesheet" type="text/css" href="{%static 'vendor/select2/select2.min.css'%}">
-	<link rel="stylesheet" type="text/css" href="{%static 'css/util.css'%}">
-	<link rel="stylesheet" type="text/css" href="{%static 'css/main.css'%}">
-
-</head>
-<body>
-	<div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100 w-100 pt-4 pb-4 pl-1"  style="height:95vh">
-				{% include 'base_templates/navbar.html'%}
-				{% block content %}{% endblock %}
-			</div>
-		</div>
-	</div>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<title>{%block title%}{%endblock%}</title>
+		<link rel="stylesheet" type="text/css" href="{%static 'vendor/bootstrap/css/bootstrap.min.css'%}">
+		<link rel="stylesheet" type="text/css" href="{%static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css'%}">
+		{%block link%}{%endblock%}
+	</head>
+	<body>
+		{%include 'base_templates/navbar.html'%}
+		{%block content%}
+		{%endblock%}
+	</body>
 	<script src="{%static 'vendor/jquery/jquery-3.2.1.min.js'%}"></script>
-	<script src="{%static 'vendor/bootstrap/js/popper.min.js'%}"></script>
 	<script src="{%static 'vendor/bootstrap/js/bootstrap.min.js'%}"></script>
-	<script src="{%static 'vendor/select2/select2.min.js'%}"></script>
-	<script src="{%static 'vendor/tilt/tilt.jquery.min.js'%}"></script>
-	<script>
-		$('.js-tilt').tilt({scale: 1.1})
-		{% block extra_js %}{% endblock %}
-	</script>
-	<script src="{%static 'js/main.js'%}"></script>
-	<script src="{% static 'js/jquery.bootstrap.modal.forms.min.js' %}"></script>
-</body>
+	{%block script%}
+	{%endblock%}
 </html>

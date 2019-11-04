@@ -1,11 +1,5 @@
 <form method="post">
     {% csrf_token %}
     <p>Are you sure you want to delete "{{ object }}"?</p>
-    <button type="submit" onclick="closewin()">delete</button>
+    <button type="submit">delete</button>
 </form>
-<script type="text/javascript">
-  function closewin(){
-    window.opener.loadData();
-    window.close()
-  }
-</script>

@@ -77,19 +77,19 @@ class TempItemCreateView(CreateView):
     template_name = 'add_temp_item.html'
     model = temp_Item_detail
     fields = ['item','quantity','price']
-    success_url = reverse_lazy('item:add_bill')
+    success_url = reverse_lazy('item:blank')
 
 class TempItemEditView(UpdateView):
     model = temp_Item_detail
     template_name = 'update_temp_item.html'
     fields = ['item','quantity','price']
-    success_url = reverse_lazy('item:add_bill')
+    success_url = reverse_lazy('item:blank')
 
 class TempItemDeleteView(DeleteView):
     model= temp_Item_detail
     template_name = 'delete_temp_item.html'
     success_message = 'item deleted'
-    success_url = reverse_lazy('item:add_bill')
+    success_url = reverse_lazy('item:blank')
 
 def NewBill(request):
     items = temp_Item_detail.objects.all()
@@ -102,3 +102,6 @@ def updateList(request):
         data = serializers.serialize('json',query)
         return HttpResponse(data)
     return JsonResponse({'error':'some problem with server RETRY!'})
+
+def blankPage(request):
+    return render(request,'blank.html')

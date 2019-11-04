@@ -1,0 +1,24 @@
+{%load static%}
+<style media="screen">
+@font-face {
+  font-family: 'Indie Flower';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Indie Flower'), local('IndieFlower'), url({%static 'fonts/m8JVjfNVeKWVnh3QMuKkFcZVaUuH.woff2'%}) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+</style>
+<nav class="navbar navbar-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{%url 'homepage'%}">
+      <span style="font-family:'Indie Flower';font-weight:bold;letter-spacing: 1px;color:blue">Accounts Management</span>
+    </a>
+    {% if request.user.is_authenticated %}
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="{%url 'password_change'%}"  style="font-family:'Indie Flower';font-weight:bold;color:#000000">Change Password</a></li>
+      <li><a href="{%url 'logout'%}"  style="font-family:'Indie Flower';font-weight:bold;color:#000000">Log Out</a></li>
+    </ul>
+    {% endif %}
+  </div>
+</nav>
