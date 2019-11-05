@@ -1,11 +1,69 @@
-<h1>Customer</h1>
-<ul>
-{% for customer in object_list %}
-    <li>{{ customer.cust_id }} {{ customer.name }} {{customer.father_or_husband_name}} {{customer.village}} {{customer.mobile_no}}
-      <a href="{%url 'cust:update' customer.id%}">update</a>
-      <!-- <a href="{%url 'cust:delete' customer.id%}">delete</a> -->
-    </li>
-{% empty %}
-    <li>No Customers yet.</li>
-{% endfor %}
-</ul>
+{% extends 'base_templates/base.html'%}
+{%block title%} customers {%endblock%}
+{%block content%}
+<style media="screen">
+.table td, .table th {
+  padding: 0.35rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+}
+</style>
+<hr>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-1"></div>
+      <div class="col-sm-10">
+        <div class="row">
+          <div class="col-sm-4 text-muted"><h4>Customers list</h4></div>
+          <div class="col-sm-4"></div>
+          <div class="col-sm-4 text-muted text-right"><span class="btn btn-primary" style="font-size:11px"><a href="{%url 'cust:add'%}" class="text-white">Add Customer</a></span></div>
+        </div>
+        <div class="row border-top border-bottom mb-3" style="background-color:#f4f4ff">
+          <div class="col-sm-4">
+            <div class="input-group input-group-sm mt-2 mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm"><i class="fa fa-search"></i></span>
+                </div>
+                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <table class="table table-striped" style="font-size:12px;">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Father/Husband Name</th>
+                <th scope="col">Village</th>
+                <th scope="col">Mobile no</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for customer in object_list %}
+              <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{ customer.cust_id }} </td>
+                <td>{{ customer.name }}</td>
+                <td>{{customer.father_or_husband_name}}</td>
+                <td>{{customer.village}}</td>
+                <td>{{customer.mobile_no}}</td>
+                <td>
+                  <a href="{%url 'cust:update' customer.id%}" style="color:#FFA500;"><i class="fa fa-edit"></i></a>
+                  <!-- <a href="{%url 'cust:delete' customer.id%}"><i class="fa fa-trash-o"></i></a> -->
+                </td>
+              </tr>
+              {% empty %}
+                  <tr>No Customers yet.</tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="row border-top"></div>
+      </div>
+      <div class="col-sm-1"></div>
+    </div>
+  </div>
+{%endblock%}
