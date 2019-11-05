@@ -3,6 +3,10 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView,CreateView,UpdateView,DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Customer
+from django.core.paginator import Paginator
+from django.core.paginator import EmptyPage
+from django.core.paginator import PageNotAnInteger
+
 
 class addCustomer(LoginRequiredMixin,CreateView):
     template_name = 'add_customer.html'
@@ -12,7 +16,24 @@ class addCustomer(LoginRequiredMixin,CreateView):
 
 class CustomerListView(LoginRequiredMixin,ListView):
     model = Customer
+    ordering = ['cust_id']
+    paginate_by = 50
     template_name = 'customer_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CustomerListView, self).get_context_data(**kwargs)
+        query = Customer.objects.all()
+        paginator = Paginator(query, self.paginate_by)
+        page = self.request.GET.get('page')
+        try:
+            file_exams = paginator.page(page)
+        except PageNotAnInteger:
+            file_exams = paginator.page(1)
+        except EmptyPage:
+            file_exams = paginator.page(paginator.num_pages)
+
+        context['object_list'] = file_exams
+        return context
 
 class CustomerUpdateView(LoginRequiredMixin,UpdateView):
     model = Customer

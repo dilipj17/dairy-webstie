@@ -1,14 +1,116 @@
+{% extends 'base_templates/base.html'%}
+{%block title%} Bill Reports {%endblock%}
+{%block content%}
+<style media="screen">
+.table td, .table th {
+  padding: 0.35rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+}
+</style>
+<hr>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-1"></div>
+      <div class="col-sm-10">
+        <div class="row mb-3">
+          <div class="col-sm-4 text-muted"><h4> Bills</h4></div>
+          <div class="col-sm-4"></div>
+        </div>
+        <div class="row">
+          <table class="table table-striped border-bottom" style="font-size:12px;">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Date</th>
+                <th scope="col">Bill Number</th>
+                <th scope="col">Name</th>
+                <th scope="col">Amount</th>
+                <th scope="col">buy</th>
+                <th scope="col">remarks</th>
+                <th scope="col">Item</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for bill in object_list %}
+              <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                {% for obj_list in bill.items.all%}
+                  {% if forloop.counter == 1%}
+                    <td>{{ bill.date }}</td>
+                    <td>{{ bill.bill_no }} </td>
+                    <td>{{bill.customer.name}}/{{bill.customer.father_or_husband_name}}</td>
+                    <td>{{bill.total_amount}}</td>
+                    {%if bill.is_buy %}
+                      <td><i class="fa fa-check" style="color:green"></i></td>
+                    {%else%}
+                      <td></td>
+                    {%endif%}
+                    <td>{{bill.remarks}}</td>
+                    <td>{{obj_list.item.name}} </td>
+                    <td>{{ obj_list.quantity}}</td>
+                    <td>{{obj_list.price}}</td>
+                    <td><a href="{%url 'item:delete_bill' bill.id%}"><i class="fa fa-trash" style="color:red"></i></a></td>
+                  {% else %}
+                    <th></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>{{obj_list.item.name}} </td>
+                    <td>{{ obj_list.quantity}}</td>
+                    <td>{{obj_list.price}}</td>
+                    <td></td>
+                  {%endif%}
+                  </tr>
+                {%endfor%}
+              {% empty %}
+                  <tr>No Items yet.</tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <nav aria-label="...">
+            <ul class="pagination pagination-sm">
+              {% for item in "x"|ljust:object_list.paginator.num_pages %}
+                {%if forloop.counter == object_list.number %}
+                  <li class="page-item disabled">
+                    <a class="page-link" href="?page={{forloop.counter}}" tabindex="-1">{{forloop.counter}}</a>
+                  </li>
+                {%else%}
+                  <li class="page-item"><a class="page-link" href="?page={{forloop.counter}}">{{forloop.counter}}</a></li>
+                {%endif%}
+              {% endfor %}
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <div class="col-sm-1"></div>
+    </div>
+  </div>
+{%endblock%}
+{%block script%}
+<script type="text/javascript">
+
+</script>
+{%endblock%}
+
+
+
+
 <h1>Bills</h1>
 <ul>
-{% for bill in object_list %}
-    <li>{{ bill.date }} {{ bill.bill_no }} {{bill.customer}} {{bill.total_amount}}{{bill.is_buy}} {{bill.remarks}} <a href="{%url 'item:delete_bill' bill.id%}">delete</a>
+
+    <li>
       <ul>
-        {% for obj_list in bill.items.all%}
-        <li>{{obj_list.item}} {{ obj_list.quantity}} {{obj_list.price}}</li>
-        {%endfor%}
+
+        <li></li>
       </ul>
     </li>
-{% empty %}
-    <li>No Bills yet.</li>
-{% endfor %}
 </ul>

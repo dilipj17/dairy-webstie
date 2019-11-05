@@ -8,6 +8,10 @@ from customer.models import Customer
 from payment.models import Balance,Transections
 from django.http import HttpResponse,JsonResponse
 from django.core import serializers
+from django.core.paginator import Paginator
+from django.core.paginator import EmptyPage
+from django.core.paginator import PageNotAnInteger
+
 class AddItem(LoginRequiredMixin,CreateView):
     model = Item
     template_name = 'add_item.html'
@@ -16,7 +20,23 @@ class AddItem(LoginRequiredMixin,CreateView):
 
 class ViewItem(LoginRequiredMixin,ListView):
     model = Item
+    paginate_by = 50
     template_name = 'view_item.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ViewItem, self).get_context_data(**kwargs)
+        query = Item.objects.all()
+        paginator = Paginator(query, self.paginate_by)
+        page = self.request.GET.get('page')
+        try:
+            file_exams = paginator.page(page)
+        except PageNotAnInteger:
+            file_exams = paginator.page(1)
+        except EmptyPage:
+            file_exams = paginator.page(paginator.num_pages)
+
+        context['object_list'] = file_exams
+        return context
 
 class UpdateItem(LoginRequiredMixin,UpdateView):
     model = Item
@@ -66,7 +86,23 @@ class AddBill(LoginRequiredMixin,CreateView):
 
 class ViewBill(LoginRequiredMixin,ListView):
     model = Bill
+    paginate_by = 70
     template_name = 'viewbill.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ViewBill, self).get_context_data(**kwargs)
+        query = Bill.objects.all()
+        paginator = Paginator(query, self.paginate_by)
+        page = self.request.GET.get('page')
+        try:
+            file_exams = paginator.page(page)
+        except PageNotAnInteger:
+            file_exams = paginator.page(1)
+        except EmptyPage:
+            file_exams = paginator.page(paginator.num_pages)
+
+        context['object_list'] = file_exams
+        return context
 
 class DeleteBill(LoginRequiredMixin,DeleteView):
     model = Bill
