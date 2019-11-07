@@ -16,7 +16,7 @@ class AddItem(LoginRequiredMixin,CreateView):
     model = Item
     template_name = 'add_item.html'
     fields = ['item_id','name']
-    success_url = '/'
+    success_url = reverse_lazy('item:blank')
 
 class ViewItem(LoginRequiredMixin,ListView):
     model = Item

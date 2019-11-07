@@ -12,7 +12,7 @@ class addCustomer(LoginRequiredMixin,CreateView):
     template_name = 'add_customer.html'
     model = Customer
     fields = ['cust_id','name','father_or_husband_name','village','mobile_no']
-    success_url = '/'
+    success_url = reverse_lazy('item:blank')
 
 class CustomerListView(LoginRequiredMixin,ListView):
     model = Customer

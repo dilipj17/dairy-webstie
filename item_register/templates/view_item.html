@@ -16,7 +16,7 @@
         <div class="row mb-3">
           <div class="col-sm-4 text-muted"><h4>Items list</h4></div>
           <div class="col-sm-4"></div>
-          <div class="col-sm-4 text-muted text-right"><span class="btn btn-primary" style="font-size:11px"><a href="{%url 'item:add'%}" class="text-white">Add Item</a></span></div>
+          <div class="col-sm-4 text-muted text-right"><span class="btn btn-primary" style="font-size:11px" id="add_item" onclick="openform()" data-url="{%url 'item:add'%}">Add Item</span></div>
         </div>
         <div class="row border-top border-bottom mb-3" style="background-color:#f4f4ff">
           <div class="col-sm-4">
@@ -77,6 +77,14 @@
 {%endblock%}
 {%block script%}
 <script type="text/javascript">
+  function openform(){
+    url = document.getElementById('add_item').dataset.url
+    newwindow = window.open(url,"Form","width=400,height=300,left=400,top=200");
+    newwindow.loadData()
+  }
 
+  function loadData(){
+    window.location.reload();
+  }
 </script>
 {%endblock%}
