@@ -6,9 +6,7 @@ from customer.models import Customer
 from django.http import JsonResponse,HttpResponse
 from django.core import serializers
 import json
-from django.core.paginator import Paginator
-from django.core.paginator import EmptyPage
-from django.core.paginator import PageNotAnInteger
+from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 
 
 class AddTransection(CreateView):
@@ -24,7 +22,7 @@ class ViewTransection(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ViewTransection, self).get_context_data(**kwargs)
-        query = Transections.objects.all()
+        query = Transections.objects.exclude(trans_id__icontains='BL')
         paginator = Paginator(query, self.paginate_by)
         page = self.request.GET.get('page')
         try:

@@ -38,7 +38,7 @@ class CustomerListView(LoginRequiredMixin,ListView):
 class CustomerUpdateView(LoginRequiredMixin,UpdateView):
     model = Customer
     fields = ['cust_id','name','father_or_husband_name','village','mobile_no']
-    success_url = reverse_lazy('cust:view')
+    success_url = reverse_lazy('item:blank')
     template_name = 'customer_update.html'
 
 class CustomerDeleteView(LoginRequiredMixin,DeleteView):

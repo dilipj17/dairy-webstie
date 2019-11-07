@@ -42,7 +42,7 @@ class UpdateItem(LoginRequiredMixin,UpdateView):
     model = Item
     fields = ['item_id','name']
     template_name = 'update_item.html'
-    success_url = reverse_lazy('item:view')
+    success_url = reverse_lazy('item:blank')
 
 class DeleteItem(LoginRequiredMixin,DeleteView):
     model = Item
