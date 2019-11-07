@@ -53,7 +53,7 @@
                     <td>{{obj_list.item.name}} </td>
                     <td>{{ obj_list.quantity}}</td>
                     <td>{{obj_list.price}}</td>
-                    <td><a href="{%url 'item:delete_bill' bill.id%}"><i class="fa fa-trash" style="color:red"></i></a></td>
+                    <td><span><i class="fa fa-trash" style="color:red" id='bill-{{bill.id}}' onclick="openform({{bill.id}})" data-url="{%url 'item:delete_bill' bill.id%}"></i></span></td>
                   {% else %}
                     <th></th>
                     <td></td>
@@ -97,20 +97,16 @@
 {%endblock%}
 {%block script%}
 <script type="text/javascript">
+  function openform(id){
+    console.log('kuchh');
+    console.log(id);
+    url = document.getElementById('bill-'+id).dataset.url
+    newwindow = window.open(url,"Form","width=400,height=300,left=400,top=200");
+    newwindow.loadData()
+  }
 
+  function loadData(){
+    window.location.reload();
+  }
 </script>
 {%endblock%}
-
-
-
-
-<h1>Bills</h1>
-<ul>
-
-    <li>
-      <ul>
-
-        <li></li>
-      </ul>
-    </li>
-</ul>

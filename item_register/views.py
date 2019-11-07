@@ -107,7 +107,7 @@ class ViewBill(LoginRequiredMixin,ListView):
 class DeleteBill(LoginRequiredMixin,DeleteView):
     model = Bill
     template_name = 'delete_bill.html'
-    success_url = reverse_lazy('item:view_bill')
+    success_url = reverse_lazy('item:blank')
 
 class TempItemCreateView(CreateView):
     template_name = 'add_temp_item.html'
