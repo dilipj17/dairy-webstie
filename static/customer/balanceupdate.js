@@ -9,6 +9,9 @@ for (var i = 1;; i++) {
       prev -= parseInt(amount.dataset.amount,10);
     }
     document.getElementById(i+'-balance').innerHTML = prev;
+    if (prev < 0) {
+      document.getElementById(i+'-balance').style.color = 'red'
+    }
   }
   else{
     break;

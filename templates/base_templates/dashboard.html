@@ -108,13 +108,14 @@
             <div class="row">
               <div class="col-sm-12 text-center"><h5><b>Stock</b></h5></div>
             </div>
-              {% for item in object_list %}
-                <div class="row">
-                  <div class="col-sm-2"></div>
-                  <div class="col-sm-2"><span class="badge badge-primary">{{item.quantity_left}}</span></div>
-                  <div class="col-sm-7 text-left">{{item.item.name}}</div>
-                </div>
-              {% endfor %}
+              <ul class="list-group">
+                {% for item in object_list %}
+                  <li class="list-group-item d-flex justify-content-between align-items-center" style="padding:.55rem">
+                    {{item.item.name}}
+                    <span class="badge badge-primary badge-pill">{{item.quantity_left}}</span>
+                  </li>
+                {% endfor %}
+              </ul>
             </div>
         </div>
       </div>

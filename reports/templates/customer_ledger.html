@@ -1,39 +1,62 @@
-<head>
-  {% load static %}
-  <link rel="stylesheet" type="text/css" href="{%static 'vendor/bootstrap/css/bootstrap.min.css'%}">
-</head>
-<h>Customer Ledger</h>
-<body>
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">Date</th>
-        <th scope="col">ID</th>
-        <th scope="col">Customer</th>
-        <th scope="col">Credit</th>
-        <th scope="col">Debit</th>
-        <th scope="col">Remarks</th>
-        <th scope="col">Balance</th>
-      </tr>
-    </thead>
-    <tbody>
-      {%for trans in transection%}
-        <tr>
-          <td>{{trans.date}}</td>
-          <td>{{trans.trans_id}}</td>
-          <td>{{trans.customer}}</td>
-          {%if trans.credit%}
-            <td id="{{forloop.counter}}-amount" data-credit="1" data-amount='{{trans.amount}}'>{{trans.amount}}</td>
-            <td></td>
-          {%else%}
-            <td></td>
-            <td id="{{forloop.counter}}-amount" data-credit="0" data-amount='{{trans.amount}}'>{{trans.amount}}</td>
-          {%endif%}
-          <td>{{trans.remarks}}</td>
-          <td id='{{forloop.counter}}-balance'></td>
-        </tr>
-      {%endfor%}
-    </tbody>
-  </table>
+{% extends 'base_templates/base.html'%}
+{%block title%} Customers {%endblock%}
+{%block content%}
+{%load static%}
+<style media="screen">
+.table td, .table th {
+  padding: 0.35rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+}
+</style>
+<hr>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-1"></div>
+      <div class="col-sm-10">
+        <div class="row mb-3">
+          <div class="col-sm-12 text-muted text-center"><h4> Customer Ledger </h4></div>
+        </div>
+        <div class="row">
+          <table class="table table-striped border-bottom" style="font-size:12px;">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Date</th>
+                <th scope="col">ID</th>
+                <th scope="col">remarks</th>
+                <th scope="col">Credit</th>
+                <th scope="col">Debit</th>
+                <th scope="col">Balance</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for trans in transection %}
+                <tr>
+                  <th scope="row">{{forloop.counter}}</th>
+                  <td>{{trans.date}}</td>
+                  <td>{{trans.trans_id}}</td>
+                  <td>{{trans.remarks}}</td>
+                  {%if trans.credit%}
+                    <td id="{{forloop.counter}}-amount" data-credit="1" data-amount='{{trans.amount}}' style="color:green">{{trans.amount}}</td>
+                    <td></td>
+                  {%else%}
+                    <td></td>
+                    <td id="{{forloop.counter}}-amount" data-credit="0" data-amount='{{trans.amount}}' style="color:red">{{trans.amount}}</td>
+                  {%endif%}
+                  <td id='{{forloop.counter}}-balance' style="color:green"></td>
+                </tr>
+              {% empty %}
+                  <tr>No Transections yet.</tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-sm-1"></div>
+    </div>
+  </div>
+{%endblock%}
+{%block script%}
   <script src="{%static 'customer/balanceupdate.js'%}"></script>
-</body>
+{%endblock%}
