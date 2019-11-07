@@ -40,7 +40,7 @@
       url = opt.dataset.url;
     }
     newwindow = window.open(url,"Form","width=500,height=500,left=400,top=400");
-    setInterval(loadData,1700);
+    newwindow.loadData()
   }
   function loadData(){
     $.ajax(

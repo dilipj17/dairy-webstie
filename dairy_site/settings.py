@@ -103,11 +103,12 @@ TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False
 
 USE_TZ = False
 
-
+DATE_FORMAT = 'd/m/Y'
+DATE_INPUT_FORMATS = ['%d/%m/%Y']
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
