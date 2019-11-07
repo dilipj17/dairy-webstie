@@ -1,8 +1,91 @@
-<h1>Transection</h1>
-<ul>
-{% for trans in object_list %}
-    <li>{{trans.date}} {{trans.trans_id}} {{trans.customer}} {{trans.credit}} {{trans.amount}} {{trans.remarks}} <a href="{%url 'payment:delete' trans.id%}">delete</a></li>
-{% empty %}
-  <li>No Transection yet.</li>
-{% endfor %}
-</ul>
+{% extends 'base_templates/base.html'%}
+{%block title%} Bill Reports {%endblock%}
+{%block content%}
+<style media="screen">
+.table td, .table th {
+  padding: 0.35rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+}
+</style>
+<hr>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-1"></div>
+      <div class="col-sm-10">
+        <div class="row mb-3">
+          <div class="col-sm-4 text-muted"><h4> Transections </h4></div>
+          <div class="col-sm-4"></div>
+        </div>
+        <div class="row">
+          <table class="table table-striped border-bottom" style="font-size:12px;">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Date</th>
+                <th scope="col">Transection ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Credit</th>
+                <th scope="col">Debit</th>
+                <th scope="col">remarks</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for trans in object_list %}
+              <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                    <td>{{ trans.date }}</td>
+                    <td>{{ trans.trans_id }} </td>
+                    <td>{{trans.customer.name}}/{{trans.customer.father_or_husband_name}}</td>
+                    {%if trans.credit %}
+                      <td style="color:green;">{{trans.amount}}</td>
+                      <td></td>
+                    {%else%}
+                      <td></td>
+                      <td class="text-danger">{{trans.amount}}</td>
+                    {%endif%}
+                    <td>{{trans.remarks}}</td>
+                    <td><span><i class="fa fa-trash" style="color:red" id='trans-{{trans.id}}' onclick="openform({{trans.id}})" data-url="{%url 'payment:delete' trans.id%}"></i></span></td>
+                  </tr>
+              {% empty %}
+                  <tr>No Transections yet.</tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <nav aria-label="...">
+            <ul class="pagination pagination-sm">
+              {% for item in "x"|ljust:object_list.paginator.num_pages %}
+                {%if forloop.counter == object_list.number %}
+                  <li class="page-item disabled">
+                    <a class="page-link" href="?page={{forloop.counter}}" tabindex="-1">{{forloop.counter}}</a>
+                  </li>
+                {%else%}
+                  <li class="page-item"><a class="page-link" href="?page={{forloop.counter}}">{{forloop.counter}}</a></li>
+                {%endif%}
+              {% endfor %}
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <div class="col-sm-1"></div>
+    </div>
+  </div>
+{%endblock%}
+{%block script%}
+<script type="text/javascript">
+  function openform(id){
+    console.log('kuchh');
+    console.log(id);
+    url = document.getElementById('trans-'+id).dataset.url
+    newwindow = window.open(url,"Form","width=400,height=300,left=400,top=200");
+    newwindow.loadData()
+  }
+
+  function loadData(){
+    window.location.reload();
+  }
+</script>
+{%endblock%}

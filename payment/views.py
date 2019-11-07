@@ -6,6 +6,10 @@ from customer.models import Customer
 from django.http import JsonResponse,HttpResponse
 from django.core import serializers
 import json
+from django.core.paginator import Paginator
+from django.core.paginator import EmptyPage
+from django.core.paginator import PageNotAnInteger
+
 
 class AddTransection(CreateView):
     model = Transections
@@ -16,11 +20,27 @@ class AddTransection(CreateView):
 class ViewTransection(ListView):
     model = Transections
     template_name = 'view_transections.html'
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super(ViewTransection, self).get_context_data(**kwargs)
+        query = Transections.objects.all()
+        paginator = Paginator(query, self.paginate_by)
+        page = self.request.GET.get('page')
+        try:
+            file_exams = paginator.page(page)
+        except PageNotAnInteger:
+            file_exams = paginator.page(1)
+        except EmptyPage:
+            file_exams = paginator.page(paginator.num_pages)
+
+        context['object_list'] = file_exams
+        return context
 
 class DeleteTransection(DeleteView):
     model = Transections
     template_name = 'delete_transection.html'
-    success_url = reverse_lazy('payment:view')
+    success_url = reverse_lazy('item:blank')
 
 def giveBalance(request):
     if request.method == "GET":
