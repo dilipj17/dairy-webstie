@@ -18,6 +18,26 @@
           <div class="col-sm-12 text-muted text-center"><h4> Customer Ledger </h4></div>
         </div>
         <div class="row">
+          <div class="col-sm-6">
+            <div class="row mgbt-xs-0">
+              <label class="col-sm-4 control-label font-weight-bold">Id:</label>
+              <div class="col-sm-6 controls">{{transection.0.customer.cust_id}}</div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="row mgbt-xs-0">
+              <label class="col-sm-4 control-label font-weight-bold">Date:</label>
+              <div class="col-sm-6 controls" id="date-tab"></div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="row mgbt-xs-0">
+              <label class="col-sm-4 control-label font-weight-bold">Name:</label>
+              <div class="col-sm-6 controls">{{transection.0.customer.name}} / {{transection.0.customer.father_or_husband_name}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
           <table class="table table-striped border-bottom" style="font-size:12px;">
             <thead>
               <tr>
