@@ -11,6 +11,7 @@ from django.core import serializers
 from django.core.paginator import Paginator
 from django.core.paginator import EmptyPage
 from django.core.paginator import PageNotAnInteger
+from django.contrib import messages
 
 class AddItem(LoginRequiredMixin,CreateView):
     model = Item
@@ -57,6 +58,9 @@ class AddBill(LoginRequiredMixin,CreateView):
 
     def form_valid(self,form):
         items = temp_Item_detail.objects.all()
+        if not temp_Item_detail.objects.all().exists():
+            messages.error(self.request,"Add Some Items")
+            return redirect('item:add_bill')
         bill = form.save()
         total_amount = 0
         for item in items:

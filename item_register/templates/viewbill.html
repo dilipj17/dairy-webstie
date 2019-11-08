@@ -70,7 +70,7 @@
                   </tr>
                 {%endfor%}
               {% empty %}
-                  <tr>No Items yet.</tr>
+                  <tr><td>No Items yet.</td></tr>
               {% endfor %}
             </tbody>
           </table>
@@ -98,10 +98,8 @@
 {%block script%}
 <script type="text/javascript">
   function openform(id){
-    console.log('kuchh');
-    console.log(id);
     url = document.getElementById('bill-'+id).dataset.url
-    newwindow = window.open(url,"Form","width=400,height=300,left=400,top=200");
+    newwindow = window.open(url,"Form","width=400,height=400,left=400,top=200");
     newwindow.loadData()
   }
 
