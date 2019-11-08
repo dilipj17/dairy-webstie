@@ -21,7 +21,7 @@
           <div class="col-sm-6">
             <div class="row mgbt-xs-0">
               <label class="col-sm-4 control-label font-weight-bold">Id:</label>
-              <div class="col-sm-6 controls">{{transection.0.customer.cust_id}}</div>
+              <div class="col-sm-6 controls">{{customer.cust_id}}</div>
             </div>
           </div>
           <div class="col-sm-6">
@@ -33,7 +33,7 @@
           <div class="col-sm-6">
             <div class="row mgbt-xs-0">
               <label class="col-sm-4 control-label font-weight-bold">Name:</label>
-              <div class="col-sm-6 controls">{{transection.0.customer.name}} / {{transection.0.customer.father_or_husband_name}}</div>
+              <div class="col-sm-6 controls">{{customer.name}} / {{customer.father_or_husband_name}}</div>
             </div>
           </div>
         </div>
@@ -44,7 +44,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Date</th>
                 <th scope="col">ID</th>
-                <th scope="col">remarks</th>
+                <th scope="col">Remarks</th>
                 <th scope="col">Credit</th>
                 <th scope="col">Debit</th>
                 <th scope="col">Balance</th>
@@ -67,7 +67,7 @@
                   <td id='{{forloop.counter}}-balance' style="color:green"></td>
                 </tr>
               {% empty %}
-                  <tr>No Transections yet.</tr>
+                  <tr><td>No Transections yet.</td></tr>
               {% endfor %}
             </tbody>
           </table>

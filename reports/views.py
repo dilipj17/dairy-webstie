@@ -24,7 +24,7 @@ class LedgerQueryView(FormView):
             customer = Customer.objects.get(cust_id = id)
             transection = Transections.objects.filter(customer=customer)
             # return HttpResponse('hogya')
-            return render(self.request,'customer_ledger.html',{'transection':transection})
+            return render(self.request,'customer_ledger.html',{'transection':transection,'customer':customer})
         messages.error(self.request,'customer id does not exists')
         return redirect('report:report')
 
