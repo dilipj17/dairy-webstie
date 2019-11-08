@@ -10,7 +10,7 @@ from copy import deepcopy
 from django import forms
 
 class CustomerQueryForm(forms.Form):
-    customer_id = forms.IntegerField()
+    customer_id = forms.IntegerField(widget=forms.TextInput(attrs={'class': "form-control mx-sm-3",'autocomplete':'off'}))
 
 
 class LedgerQueryView(FormView):
