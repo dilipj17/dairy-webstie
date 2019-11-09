@@ -1,8 +1,147 @@
 {%extends 'base_templates/base.html'%}
 {%block content%}
 <hr>
-<form class="" action="index.html" method="post">
-  {%csrf_token%}
-  {{form}}
-</form>
+<div class="row mb-4">
+  <div class="col-sm-12 text-center text-muted"> Add Transection</div>
+</div>
+<div class="row">
+  <div class="col-sm-3"></div>
+  <div class="col-sm-8">
+    <form class="needs-validation" novalidate  method="post">
+      {%csrf_token%}
+      {{ form.non_field_errors }}
+      <div class="form-row">
+        <div class="col-md-4 mb-3">
+          {{ form.date.errors }}
+          <label for="{{ form.date.id_for_label }}">Date</label>
+          {{form.date}}
+          <div class="valid-tooltip">
+            Looks good!
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          {{ form.trans_id.errors }}
+          <label for="{{ form.trans_id.id_for_label }}">Transection ID</label>
+          {{form.trans_id}}
+          <div class="valid-tooltip">
+            Looks good!
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-4 mb-3">
+          {{form.customer.errors}}
+          <label for="id_customer">Customer Id</label>
+          <input type="number" class="form-control" id="customer_id" required>
+          <input type="hidden" name="customer" value="{{form.customer.value}}" id="id_customer">
+          <div class="valid-tooltip">
+            Looks good!
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="validationTooltip02">Customer Name</label>
+          <input type="text" class="form-control" value="customer name" style="color:blue" id="customer_name" disabled>
+          <div class="valid-tooltip">
+            Looks good!
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-4 mb-3">
+          {{ form.amount.errors }}
+          <label for="{{ form.amount.id_for_label }}">Amount</label>
+          {{form.amount}}
+          <div class="valid-tooltip">
+            Looks good!
+          </div>
+        </div>
+        <div class="col-md-4 mt-4 ml-2">
+          {{ form.credit.errors }}
+          <div class="custom-control custom-checkbox">
+            {{form.credit}}
+            <!-- <input type="checkbox" class="custom-control-input" id="id_credit" name="credit"> -->
+            <label class="custom-control-label" for="{{ form.credit.id_for_label }}">Credit</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-8 mb-3">
+          {{ form.remarks.errors }}
+          <label for="{{ form.remarks.id_for_label }}">Remarks</label>
+          {{form.remarks}}
+          <div class="valid-tooltip">
+            Looks good!
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-8 text-right">
+          <button class="btn btn-primary" type="submit">Submit form</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-sm-2"></div>
+</div>
+{%endblock%}
+{%block script%}
+<script type="text/javascript">
+  $('#id_date').addClass('form-control')
+  $('#id_remarks').addClass('form-control')
+  $('#id_amount').addClass('form-control')
+  $('#id_trans_id').addClass('form-control')
+  $('#id_credit').addClass('custom-control-input')
+
+  var $initial = $('#id_customer');
+  var typingTimer;                //timer identifier
+  var doneTypingInterval = 300;  //time in ms, 5 second for example
+  var $input = $('#customer_id');
+
+  if ($initial.val()) {
+    var $input = $('#id_customer');
+    doneTyping();
+    var $input = $('#customer_id');
+    $input.val($initial.val())
+  }
+  //on keyup, start the countdown
+  $input.on('keyup', function () {
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(doneTyping, doneTypingInterval);
+  });
+
+  //on keydown, clear the countdown
+  $input.on('keydown', function () {
+    clearTimeout(typingTimer);
+  });
+
+  //user is "finished typing," do something
+  function doneTyping () {
+    var id = $input.val();
+    if (!id) {
+      $('#customer_name').val('Customer Name');
+      $('#customer_name').css('color','blue');
+      $('#id_customer').val('None');
+    }
+    else {
+      $.ajax({
+          url: "{%url 'payment:apibalance'%}",
+          data: {'id':id},
+          datatype: 'json',
+          success: function(data){
+            var model = JSON.parse(data);
+            if (model.responce) {
+              $('#customer_name').val(model.name);
+              $('#id_customer').val(model.id);
+              $('#customer_name').css('color','green');
+            }
+            else {
+              $('#id_customer').val('None');
+              $('#customer_name').val(model.data);
+              $('#Customer_name').css('color','red');
+            }
+          }
+      });
+    }
+  }
+</script>
 {%endblock%}

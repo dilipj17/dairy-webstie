@@ -51,7 +51,8 @@ def giveBalance(request):
                 data = {
                     'responce':1,
                     'amount':bal.balance,
-                    'name': str(bal.customer.name)+" / "+str(bal.customer.father_or_husband_name)
+                    'name': str(bal.customer.name)+" / "+str(bal.customer.father_or_husband_name),
+                    'id':bal.customer.id,
                 }
                 return HttpResponse(json.dumps(data))
             else:
