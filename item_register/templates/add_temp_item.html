@@ -1,6 +1,24 @@
-<h>add item</h>
-<form method="post">
-  {% csrf_token %}
-  {{form}}
-  <button type="submit">Create</button>
-</form>
+{%extends 'base_templates/base_without_navbar.html'%}
+{%block content%}
+  <div class="container mt-3 mr-0">
+    <div class="row">
+      <div class="col-sm-12">
+        <h5 class="text-muted mb-3">Add Item</h5>
+        <form enctype="multipart/form-data" method="POST">
+          {% csrf_token %}
+          <div class="col-sm-6">
+          {{form}}
+          <button type="submit" name="button" class="btn btn-info mt-3">Add</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{%endblock%}
+{%block script%}
+<script type="text/javascript">
+  $('#id_item').addClass('form-control');
+  $('#id_quantity').addClass('form-control');
+  $('#id_price').addClass('form-control');
+</script>
+{%endblock%}

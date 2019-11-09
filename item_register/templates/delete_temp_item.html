@@ -1,5 +1,16 @@
-<form method="post">
-    {% csrf_token %}
-    <p>Are you sure you want to delete "{{ object }}"?</p>
-    <button type="submit">delete</button>
+{%extends 'base_templates/base_without_navbar.html'%}
+{%block content%}
+<form method="post" class="alert alert-danger">{% csrf_token %}
+  <div class="alert alert-danger" role="alert">
+    <h4 class="alert-heading">Confirmation!</h4>
+    <p>Are you sure you want to delete?</p>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">{{object.item.name}}</li>
+      <li class="list-group-item">{{object.quantity}}</li>
+      <li class="list-group-item">{{object.price}}</li>
+    </ul>
+    <hr>
+    <input class="btn btn-danger" type="submit" value="Confirm">
+  </div>
 </form>
+{%endblock%}
