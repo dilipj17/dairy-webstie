@@ -1,4 +1,4 @@
-var prev = 0
+var prev = parseInt(document.getElementById('opening_balance').innerHTML)
 for (var i = 1;; i++) {
   var amount = document.getElementById(i+'-amount');
   if(amount){
