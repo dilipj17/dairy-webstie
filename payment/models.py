@@ -14,6 +14,9 @@ class Transections(models.Model):
     amount = models.IntegerField()
     remarks = models.CharField(max_length=255,blank=True,null=True)
 
+    class Meta:
+        ordering = ['date']
+
 class Balance(models.Model):
     date = models.DateField(default=timezone.now,blank=True)
     customer = models.ForeignKey(Customer,on_delete=models.PROTECT)

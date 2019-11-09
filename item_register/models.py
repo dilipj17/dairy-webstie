@@ -8,6 +8,9 @@ class Item(models.Model):
     item_id = models.IntegerField(unique=True,null=True)
     name = models.CharField(max_length=25)
 
+    class Meta:
+        ordering = ['item_id']
+
     def __str__(self):
         return str(str(self.item_id) +" "+ str(self.name))
 
@@ -31,6 +34,8 @@ class Bill(models.Model):
     is_buy = models.BooleanField(default=False)
     remarks = models.CharField(max_length=255,blank=True,null=True)
 
+    class Meta:
+        ordering = ['date']
 
 class Item_stock(models.Model):
     date_stock_update = models.DateField(default=timezone.now,blank=True)
