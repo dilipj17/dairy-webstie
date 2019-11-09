@@ -22,7 +22,7 @@ class ViewTransection(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ViewTransection, self).get_context_data(**kwargs)
-        query = Transections.objects.exclude(trans_id__icontains='BL')
+        query = Transections.objects.exclude(trans_id__icontains='BL').order_by('date')
         paginator = Paginator(query, self.paginate_by)
         page = self.request.GET.get('page')
         try:

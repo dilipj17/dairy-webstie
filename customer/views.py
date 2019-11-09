@@ -22,7 +22,7 @@ class CustomerListView(LoginRequiredMixin,ListView):
 
     def get_context_data(self, **kwargs):
         context = super(CustomerListView, self).get_context_data(**kwargs)
-        query = Customer.objects.all()
+        query = Customer.objects.all().order_by('cust_id')
         paginator = Paginator(query, self.paginate_by)
         page = self.request.GET.get('page')
         try:

@@ -26,7 +26,7 @@ class ViewItem(LoginRequiredMixin,ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ViewItem, self).get_context_data(**kwargs)
-        query = Item.objects.all()
+        query = Item.objects.all().order_by('item_id')
         paginator = Paginator(query, self.paginate_by)
         page = self.request.GET.get('page')
         try:
@@ -95,7 +95,7 @@ class ViewBill(LoginRequiredMixin,ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ViewBill, self).get_context_data(**kwargs)
-        query = Bill.objects.all()
+        query = Bill.objects.all().order_by('date')
         paginator = Paginator(query, self.paginate_by)
         page = self.request.GET.get('page')
         try:
