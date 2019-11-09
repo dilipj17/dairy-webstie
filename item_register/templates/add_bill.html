@@ -1,38 +1,191 @@
+{%extends 'base_templates/base.html'%}
 {% load static %}
-<script src="{%static 'vendor/jquery/jquery-3.2.1.min.js'%}"></script>
-<h3>Add item</h3>
-{% if messages %}
-  {% for message in messages %}
-    <div class="alert alert-{{ message.tags }}">
-      {{message}}
-    </div>
-  {% endfor %}
-{% endif %}
-<form enctype="multipart/form-data" method="POST">
-  {% csrf_token %}
-  <div class="input-group">
-    {{ form.form }}
-      <span class="btn btn-info" style="cursor:pointer"onclick="openwindow(0,0)">add item</span>
-    <span>
-      <button type="submit">submit</button>
-    </span>
-  </div>
-</form>
-<div id="data">
-    <table>
-      {%for item in items %}
-      <tr>
-        <td>{{item.item}}</td>
-        <td>{{item.quantity}}</td>
-        <td>{{item.price}}</td>
-        <td><button onclick="openwindow(1,{{item.pk}})" id="{{item.pk}}-update" data-url="{%url 'item:edittempitem' item.pk %}">update</button></td>
-        <td><button onclick="openwindow(2,{{item.pk}})" id="{{item.pk}}-delete" data-url="{%url 'item:deletetempitem' item.pk %}">delete</button></td>
-      </tr>
-        {%endfor%}
-    </table>
-  <br>
+{%block content%}
+<style media="screen">
+.table td, .table th {
+  padding: 0.35rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+}
+</style>
+<hr>
+<div class="row mb-4">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-8 text-center text-muted"> Add Bill</div>
 </div>
+<div class="row">
+  <div class="col-md-12 text-info">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+          {{message}}
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-3"></div>
+  <div class="col-sm-8">
+    <form class="needs-validation" novalidate  method="post">
+      {%csrf_token%}
+      {{ form.form.non_field_errors }}
+      <div class="form-row">
+        <div class="col-md-2 mb-3">
+          {{ form.form.date.errors }}
+          <label for="{{ form.form.date.id_for_label }}">Date</label>
+          {{form.form.date}}
+          <div class="valid-tooltip">
+            Looks good!
+          </div>
+        </div>
+        <div class="col-md-2 mb-3">
+          {{ form.form.bill_no.errors }}
+          <label for="{{ form.form.bill_no.id_for_label }}">Bill ID</label>
+          {{form.form.bill_no}}
+          <div class="valid-tooltip">
+            Looks good!
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          {{ form.form.remarks.errors }}
+          <label for="{{ form.form.remarks.id_for_label }}">Remarks</label>
+          {{form.form.remarks}}
+          <div class="valid-tooltip">
+            Looks good!
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-2 mb-3">
+          {{form.form.customer.errors}}
+          <label for="id_customer">Customer Id</label>
+          <input type="number" class="form-control" id="customer_id" required>
+          <input type="hidden" name="customer" value="{{form.form.customer.value}}" id="id_customer">
+          <div class="valid-tooltip">
+            Looks good!
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="validationTooltip02">Customer Name</label>
+          <input type="text" class="form-control" value="customer name" style="color:blue" id="customer_name" disabled>
+          <div class="valid-tooltip">
+            Looks good!
+          </div>
+        </div>
+        <div class="col-md-2 mt-4 ml-3">
+          {{ form.form.is_buy.errors }}
+          <div class="custom-control custom-checkbox">
+            {{form.form.is_buy}}
+            <!-- <input type="checkbox" class="custom-control-input" id="id_credit" name="credit"> -->
+            <label class="custom-control-label" for="{{ form.form.is_buy.id_for_label }}">Buy</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-8">
+          <table class="table table-striped border-bottom" style="font-size:12px;">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Item</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Price</th>
+              <th scope="col" colspan="2">  <span style="cursor:pointer;color:green"onclick="openwindow(0,0)"> <i class="fa fa-plus"></i></span> <== add item</th>
+            </tr>
+          </thead>
+          <tbody id="data">
+            {%for item in items %}
+              <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{item.item.name}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.price}}</td>
+                <td>
+                  <span style="cursor:pointer;color:green" onclick="openwindow(1,{{item.pk}})" id="{{item.pk}}-update" data-url="{%url 'item:edittempitem' item.pk %}">
+                    <i class="fa fa-edit"></i>
+                  </span>
+                </td>
+                <td>
+                  <span style="cursor:pointer;color:red" onclick="openwindow(2,{{item.pk}})" id="{{item.pk}}-delete" data-url="{%url 'item:deletetempitem' item.pk %}">
+                    <i class="fa fa-trash"></i>
+                  </span>
+                </td>
+              </tr>
+            {% empty %}
+                <tr><th colspan="5" class="text-center text-info">No Items yet.</th></tr>
+            {% endfor %}
+          </tbody>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-12 text-right">
+          <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-sm-2"></div>
+</div>
+{%endblock%}
+{%block script%}
 <script type="text/javascript">
+  $('#id_date').addClass('form-control')
+  $('#id_bill_no').addClass('form-control')
+  $('#id_remarks').addClass('form-control')
+  $('#id_bill_no').prop('type','number')
+  $('#id_is_buy').addClass('custom-control-input')
+  var $initial = $('#id_customer');
+  var typingTimer;                //timer identifier
+  var doneTypingInterval = 300;  //time in ms, 5 second for example
+  var $input = $('#customer_id');
+
+  if ($initial.val()) {
+    var $input = $('#id_customer');
+    doneTyping();
+    var $input = $('#customer_id');
+    $input.val($initial.val())
+  }
+  //on keyup, start the countdown
+  $input.on('keyup', function () {
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(doneTyping, doneTypingInterval);
+  });
+
+  //on keydown, clear the countdown
+  $input.on('keydown', function () {
+    clearTimeout(typingTimer);
+  });
+
+  //user is "finished typing," do something
+  function doneTyping () {
+    var id = $input.val();
+    if (!id) {
+      $('#customer_name').val('Customer Name');
+      $('#customer_name').css('color','blue');
+      $('#id_customer').val('None');
+    }
+    else {
+      $.ajax({
+          url: "{%url 'payment:apibalance'%}",
+          data: {'id':id},
+          datatype: 'json',
+          success: function(data){
+            var model = JSON.parse(data);
+            if (model.responce) {
+              $('#customer_name').val(model.name);
+              $('#id_customer').val(model.id);
+              $('#customer_name').css('color','green');
+            }
+            else {
+              $('#id_customer').val('None');
+              $('#customer_name').val(model.data);
+              $('#Customer_name').css('color','red');
+            }
+          }
+      });
+    }
+  }
   function openwindow(i,id){
     var url;
     if (i==0) {
@@ -47,7 +200,7 @@
       url = opt.dataset.url;
     }
     newwindow = window.open(url,"Form","width=500,height=500,left=400,top=400");
-    newwindow.loadData()
+    newwindow.loadData;
   }
   function loadData(){
     $.ajax(
@@ -56,11 +209,30 @@
         url:"{%url 'item:list'%}",
         success:function(data){
           var model = JSON.parse(data);
-          var syntex = "<table>"
-          for (var bit in model) {
-            syntex += '<tr><td>'+String(model[bit].fields.item)+'</td><td>'+String(model[bit].fields.quantity)+'</td><td>'+String(model[bit].fields.price)+'</td><td><button href=\'#\' onclick="openwindow(1,'+String(model[bit].pk)+')" id="'+String(model[bit].pk)+'-update" data-url="/item/tempitemupdate/'+String(model[bit].pk)+'">update</button></td><td><button href=\'#\' onclick="openwindow(2,'+String(model[bit].pk)+')" id="'+String(model[bit].pk)+'-delete" data-url="/item/tempitemdelete/'+String(model[bit].pk)+'"%}">delete</button></td></tr>';
+          var syntex
+          if (!model[0]) {
+              syntex += '<tr><th colspan="5" class="text-center text-info">No Items yet.</th></tr>'
           }
-          syntex += "</table>";
+          for (var bit in model) {
+            no = parseFloat(bit)+1;
+            id = model[bit].pk;
+            syntex+=  '<tr>'
+            syntex+=  '<th scope="row">'+no+'</th>'
+            syntex+=  '<td>'+String(model[bit].fields.item)+'</td>'
+            syntex+=  '<td>'+String(model[bit].fields.quantity)+'</td>'
+            syntex+=  '<td>'+String(model[bit].fields.price)+'</td>'
+            syntex+=  '<td>'
+            syntex+=  '<span style="cursor:pointer;color:green" onclick="openwindow(1,'+id+')" id="'+id+'-update" data-url="/item/tempitemupdate/'+id+'">'
+            syntex+=  '<i class="fa fa-edit"></i>'
+            syntex+=  '</span>'
+            syntex+=  '</td>'
+            syntex+=  '<td>'
+            syntex+=  '<span style="cursor:pointer;color:red" onclick="openwindow(2,'+id+')" id="'+id+'-delete" data-url="/item/tempitemdelete/'+id+'">'
+            syntex+=  '<i class="fa fa-trash"></i>'
+            syntex+=  '</span>'
+            syntex+=  '</td>'
+            syntex+=  '</tr>'
+          }
           $('#data').html("");
           $('#data').html(syntex);
         }
@@ -68,3 +240,4 @@
     )
   }
 </script>
+{%endblock%}

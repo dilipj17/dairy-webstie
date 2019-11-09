@@ -12,6 +12,7 @@ from django.core.paginator import Paginator
 from django.core.paginator import EmptyPage
 from django.core.paginator import PageNotAnInteger
 from django.contrib import messages
+import json
 
 class AddItem(LoginRequiredMixin,CreateView):
     model = Item
@@ -139,8 +140,15 @@ def NewBill(request):
 def updateList(request):
     if request.method == 'GET':
         query = temp_Item_detail.objects.all()
-        data = serializers.serialize('json',query)
-        return HttpResponse(data)
+        data = []
+        for item in query:
+            data.append(
+                {
+                    'pk': item.pk,
+                    'fields': {"item": item.item.name, "quantity": item.quantity, "price": item.price}
+                }
+            )
+        return HttpResponse(json.dumps(data))
     return JsonResponse({'error':'some problem with server RETRY!'})
 
 def blankPage(request):
