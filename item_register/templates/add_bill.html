@@ -9,128 +9,127 @@
 }
 </style>
 <hr>
-<div class="row mb-4">
-  <div class="col-sm-2"></div>
-  <div class="col-sm-8 text-center text-muted"> Add Bill</div>
-</div>
-<div class="row">
-  <div class="col-md-12 text-info">
-    {% if messages %}
-      {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">
-          {{message}}
-        </div>
-      {% endfor %}
-    {% endif %}
+  <div class="row mb-4">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8 text-center text-muted"> Add Bill</div>
   </div>
-</div>
-<div class="row">
-  <div class="col-sm-3"></div>
-  <div class="col-sm-8">
-    <form class="needs-validation" novalidate  method="post">
-      {%csrf_token%}
-      {{ form.form.non_field_errors }}
-      <div class="form-row">
-        <div class="col-md-2 mb-3">
-          {{ form.form.date.errors }}
-          <label for="{{ form.form.date.id_for_label }}">Date</label>
-          {{form.form.date}}
-          <div class="valid-tooltip">
-            Looks good!
+  <div class="row">
+    <div class="col-md-12 text-info">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">
+            {{message}}
           </div>
-        </div>
-        <div class="col-md-2 mb-3">
-          {{ form.form.bill_no.errors }}
-          <label for="{{ form.form.bill_no.id_for_label }}">Bill ID</label>
-          {{form.form.bill_no}}
-          <div class="valid-tooltip">
-            Looks good!
-          </div>
-        </div>
-        <div class="col-md-4 mb-3">
-          {{ form.form.remarks.errors }}
-          <label for="{{ form.form.remarks.id_for_label }}">Remarks</label>
-          {{form.form.remarks}}
-          <div class="valid-tooltip">
-            Looks good!
-          </div>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="col-md-2 mb-3">
-          {{form.form.customer.errors}}
-          <label for="id_customer">Customer Id</label>
-          <input type="number" class="form-control" id="customer_id" required>
-          <input type="hidden" name="customer" value="{{form.form.customer.value}}" id="id_customer">
-          <div class="valid-tooltip">
-            Looks good!
-          </div>
-        </div>
-        <div class="col-md-4 mb-3">
-          <label for="validationTooltip02">Customer Name</label>
-          <input type="text" class="form-control" value="customer name" style="color:blue" id="customer_name" disabled>
-          <div class="valid-tooltip">
-            Looks good!
-          </div>
-        </div>
-        <div class="col-md-2 mt-4 ml-3">
-          {{ form.form.is_buy.errors }}
-          <div class="custom-control custom-checkbox">
-            {{form.form.is_buy}}
-            <!-- <input type="checkbox" class="custom-control-input" id="id_credit" name="credit"> -->
-            <label class="custom-control-label" for="{{ form.form.is_buy.id_for_label }}">Buy</label>
-          </div>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="col-md-8">
-          <table class="table table-striped border-bottom" style="font-size:12px;">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Item</th>
-              <th scope="col">Quantity</th>
-              <th scope="col">Price</th>
-              <th scope="col">amount</th>
-              <th scope="col" colspan="2">  <span style="cursor:pointer;color:green" onclick="openwindow(0,0)">add item</th>
-            </tr>
-          </thead>
-          <tbody id="data">
-            {%for item in items %}
-              <tr>
-                <th scope="row">{{forloop.counter}}</th>
-                <td>{{item.item.name}}</td>
-                <td>{{item.quantity}}</td>
-                <td>{{item.price}}</td>
-                <td></td>
-                <td>
-                  <span style="cursor:pointer;color:green" onclick="openwindow(1,{{item.pk}})" id="{{item.pk}}-update" data-url="{%url 'item:edittempitem' item.pk %}">
-                    <i class="fa fa-edit"></i>
-                  </span>
-                </td>
-                <td>
-                  <span style="cursor:pointer;color:red" onclick="openwindow(2,{{item.pk}})" id="{{item.pk}}-delete" data-url="{%url 'item:deletetempitem' item.pk %}">
-                    <i class="fa fa-trash"></i>
-                  </span>
-                </td>
-              </tr>
-            {% empty %}
-                <tr><th colspan="6" class="text-center text-info">No Items yet.</th></tr>
-            {% endfor %}
-          </tbody>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="col-md-6">Total Amount <span id='total_amount' class="badge badge-info"></span></div>
-        <div class="col-md-6 text-right">
-          <button class="btn btn-primary" type="submit">Submit</button>
-        </div>
-      </div>
-      </div>
-    </form>
+        {% endfor %}
+      {% endif %}
+    </div>
   </div>
-  <div class="col-sm-2"></div>
-</div>
+  <div class="row">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10">
+      <form  method="post">
+        {%csrf_token%}
+        {{ form.form.non_field_errors }}
+        <div class="form-row">
+          <div class="col-md-2 mb-3">
+            {{ form.form.date.errors }}
+            <label for="{{ form.form.date.id_for_label }}">Date</label>
+            {{form.form.date}}
+            <div class="invalid-feedback" >
+              Looks good!
+            </div>
+          </div>
+          <div class="col-md-2 mb-3">
+            {{ form.form.bill_no.errors }}
+            <label for="{{ form.form.bill_no.id_for_label }}">Bill ID</label>
+            {{form.form.bill_no}}
+            <div class="valid-tooltip">
+              Looks good!
+            </div>
+          </div>
+          <div class="col-md-2 mb-3">
+            {{form.form.customer.errors}}
+            <label for="id_customer">Customer Id</label>
+            <input type="number" class="form-control" id="customer_id" required>
+            <input type="hidden" name="customer" value="{{form.form.customer.value}}" id="id_customer">
+            <div class="valid-tooltip">
+              Looks good!
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            {{ form.form.remarks.errors }}
+            <label for="{{ form.form.remarks.id_for_label }}">Remarks</label>
+            {{form.form.remarks}}
+            <div class="valid-tooltip">
+              Looks good!
+            </div>
+          </div>
+          <div class="col-md-2 mb-3 mt-4">
+            {{ form.form.is_buy.errors }}
+            <div class="custom-control custom-checkbox">
+              {{form.form.is_buy}}
+              <!-- <input type="checkbox" class="custom-control-input" id="id_credit" name="credit"> -->
+              <label class="custom-control-label" for="{{ form.form.is_buy.id_for_label }}">Buy</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-4 mb-3">
+            <!-- <label for="validationTooltip02">Customer Name</label> -->
+            <input type="text" class="form-control" value="customer name" style="color:blue" id="customer_name" disabled>
+            <div class="valid-tooltip">
+              Looks good!
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-11">
+            <table class="table table-striped border-bottom" style="font-size:12px;">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Item</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">amount</th>
+                  <th scope="col" colspan="2">  <span style="cursor:pointer;color:green" onclick="openwindow(0,0)">add item</th>
+                </tr>
+              </thead>
+              <tbody id="data">
+                {%for item in items %}
+                  <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{item.item.name}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>{{item.price}}</td>
+                    <td></td>
+                    <td>
+                      <span style="cursor:pointer;color:green" onclick="openwindow(1,{{item.pk}})" id="{{item.pk}}-update" data-url="{%url 'item:edittempitem' item.pk %}">
+                        <i class="fa fa-edit"></i>
+                      </span>
+                    </td>
+                    <td>
+                      <span style="cursor:pointer;color:red" onclick="openwindow(2,{{item.pk}})" id="{{item.pk}}-delete" data-url="{%url 'item:deletetempitem' item.pk %}">
+                        <i class="fa fa-trash"></i>
+                      </span>
+                    </td>
+                  </tr>
+                {% empty %}
+                  <tr><th colspan="6" class="text-center text-info">No Items yet.</th></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="form-row mb-3 ml-1">
+          <div class="col-md-6">Total Amount <span id='total_amount' class="badge badge-info"></span></div>
+          <div class="col-md-5 text-right">
+            <button class="btn btn-primary" type="submit">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 {%endblock%}
 {%block script%}
   <script type="text/javascript">

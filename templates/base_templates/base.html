@@ -11,8 +11,10 @@
 	</head>
 	<body  style="font-family:'Nunito Sans';letter-spacing: 1px;">
 		{%include 'base_templates/navbar.html'%}
-		{%block content%}
-		{%endblock%}
+		<div class="container-fluid mb-3">
+			{%block content%}
+			{%endblock%}
+		</div>
 	</body>
 	<script src="{%static 'vendor/jquery/jquery-3.2.1.min.js'%}"></script>
 	<script src="{%static 'vendor/bootstrap/js/bootstrap.min.js'%}"></script>
