@@ -27,10 +27,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'item_register',
     'customer',
-    'bootstrap_modal_forms',
     'payment',
     'reports',
-    'mathfilters',
 ]
 
 MIDDLEWARE = [
