@@ -2,6 +2,7 @@ from django.views.generic import CreateView,ListView,UpdateView,DeleteView,FormV
 from django.urls import reverse_lazy
 from django.shortcuts import redirect,render
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from .models import Item,Bill,temp_Item_detail,Item_detail
 from django import forms
 from customer.models import Customer
@@ -114,29 +115,31 @@ class DeleteBill(LoginRequiredMixin,DeleteView):
     template_name = 'delete_bill.html'
     success_url = reverse_lazy('item:blank')
 
-class TempItemCreateView(CreateView):
+class TempItemCreateView(LoginRequiredMixin,CreateView):
     template_name = 'add_temp_item.html'
     model = temp_Item_detail
     fields = ['item','quantity','price']
     success_url = reverse_lazy('item:blank')
 
-class TempItemEditView(UpdateView):
+class TempItemEditView(LoginRequiredMixin,UpdateView):
     model = temp_Item_detail
     template_name = 'update_temp_item.html'
     fields = ['item','quantity','price']
     success_url = reverse_lazy('item:blank')
 
-class TempItemDeleteView(DeleteView):
+class TempItemDeleteView(LoginRequiredMixin,DeleteView):
     model= temp_Item_detail
     template_name = 'delete_temp_item.html'
     success_message = 'item deleted'
     success_url = reverse_lazy('item:blank')
 
+@login_required
 def NewBill(request):
     items = temp_Item_detail.objects.all()
     items.delete()
     return redirect('item:add_bill')
 
+@login_required
 def updateList(request):
     if request.method == 'GET':
         query = temp_Item_detail.objects.all()
@@ -151,5 +154,6 @@ def updateList(request):
         return HttpResponse(json.dumps(data))
     return JsonResponse({'error':'some problem with server RETRY!'})
 
+@login_required
 def blankPage(request):
     return render(request,'blank.html')

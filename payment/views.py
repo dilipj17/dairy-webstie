@@ -7,15 +7,17 @@ from django.http import JsonResponse,HttpResponse
 from django.core import serializers
 import json
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 
-class AddTransection(CreateView):
+class AddTransection(LoginRequiredMixin,CreateView):
     model = Transections
     template_name = 'add_transection.html'
     success_url = '/'
     fields = ['date','customer','trans_id','credit','amount','remarks']
 
-class ViewTransection(ListView):
+class ViewTransection(LoginRequiredMixin,ListView):
     model = Transections
     template_name = 'view_transections.html'
     paginate_by = 10
@@ -35,11 +37,12 @@ class ViewTransection(ListView):
         context['object_list'] = file_exams
         return context
 
-class DeleteTransection(DeleteView):
+class DeleteTransection(LoginRequiredMixin,DeleteView):
     model = Transections
     template_name = 'delete_transection.html'
     success_url = reverse_lazy('item:blank')
 
+@login_required
 def giveBalance(request):
     if request.method == "GET":
         id = request.GET.get('id')

@@ -8,6 +8,7 @@ from payment.models import Transections
 from django.contrib import messages
 from copy import deepcopy
 from django import forms
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 class CustomerQueryForm(forms.Form):
     customer_id = forms.IntegerField(widget=forms.TextInput(attrs={'class': "form-control mx-sm-3",'autocomplete':'off'}))
@@ -15,7 +16,7 @@ class CustomerQueryForm(forms.Form):
     To = forms.DateField(required=False,widget=forms.TextInput(attrs={'class': "form-control mx-sm-3",'placeholder':'dd/mm/yyyy'}))
 
 
-class LedgerQueryView(FormView):
+class LedgerQueryView(LoginRequiredMixin,FormView):
     form_class = CustomerQueryForm
     template_name = 'ledgerqueryform.html'
 
@@ -25,20 +26,23 @@ class LedgerQueryView(FormView):
         id = formdata['customer_id']
         from_date = formdata['From']
         end_date = formdata['To']
+        if from_date > end_date:
+            messages.error(self.request,'from date should be less than to date')
+            return redirect('report:report')
         if Customer.objects.filter(cust_id = id).exists():
             customer = Customer.objects.get(cust_id = id)
+            transection = Transections.objects.filter(customer=customer)
             opening_balance = 0
-            if(from_date == None and end_date == None):
-                transection = Transections.objects.filter(customer=customer)
-            else:
-                query = Transections.objects.filter(customer=customer).filter(date__lt = from_date)
+            if end_date != None:
+                transection = transection.filter(date__lte=end_date)
+            if from_date != None:
+                query = transection.filter(date__lt = from_date)
+                transection = transection.filter(date__gte = from_date)
                 for trans in query:
                     if trans.credit:
                         opening_balance += trans.amount
                     else:
                         opening_balance -= trans.amount
-                transection = Transections.objects.filter(customer=customer).filter(date__range=[from_date,end_date])
-            # return HttpResponse('hogya')
             return render(self.request,'customer_ledger.html',{'transection':transection,'customer':customer,'opening_balance':opening_balance})
         messages.error(self.request,'customer id does not exists')
         return redirect('report:report')
