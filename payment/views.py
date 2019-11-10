@@ -46,7 +46,10 @@ class DeleteTransection(LoginRequiredMixin,DeleteView):
 def giveBalance(request):
     if request.method == "GET":
         id = request.GET.get('id')
-        id = int(id)
+        try:
+            id = int(id)
+        except ValueError:
+            return HttpResponse(json.dumps({'responce':0,'data':'Customer Name'}))
         if isinstance(id,int):
             cust = Customer.objects.filter(cust_id=int(id))
             if cust.exists():
