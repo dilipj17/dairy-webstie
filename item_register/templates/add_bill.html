@@ -32,37 +32,41 @@
         {{ form.form.non_field_errors }}
         <div class="form-row">
           <div class="col-md-2 mb-3">
-            {{ form.form.date.errors }}
             <label for="{{ form.form.date.id_for_label }}">Date</label>
             {{form.form.date}}
-            <div class="invalid-feedback" >
-              Looks good!
-            </div>
+            {%if form.form.date.errors %}
+              <div class="invalid-tooltip" style="display:block">
+                {{ form.form.date.errors }}
+              </div>
+            {%endif%}
           </div>
           <div class="col-md-2 mb-3">
-            {{ form.form.bill_no.errors }}
             <label for="{{ form.form.bill_no.id_for_label }}">Bill ID</label>
             {{form.form.bill_no}}
-            <div class="valid-tooltip">
-              Looks good!
-            </div>
+            {%if form.form.bill_no.errors %}
+              <div class="invalid-tooltip" style="display:block">
+                {{ form.form.bill_no.errors }}
+              </div>
+            {%endif%}
           </div>
           <div class="col-md-2 mb-3">
-            {{form.form.customer.errors}}
             <label for="id_customer">Customer Id</label>
             <input type="number" class="form-control" id="customer_id" required>
             <input type="hidden" name="customer" value="{{form.form.customer.value}}" id="id_customer">
-            <div class="valid-tooltip">
-              Looks good!
-            </div>
+            {%if form.form.customer.errors %}
+              <div class="invalid-tooltip" style="display:block">
+                {{ form.form.customer.errors }}
+              </div>
+            {%endif%}
           </div>
           <div class="col-md-4 mb-3">
-            {{ form.form.remarks.errors }}
             <label for="{{ form.form.remarks.id_for_label }}">Remarks</label>
             {{form.form.remarks}}
-            <div class="valid-tooltip">
-              Looks good!
-            </div>
+            {%if form.form.remarks.errors %}
+              <div class="invalid-tooltip" style="display:block">
+                {{ form.form.remarks.errors }}
+              </div>
+            {%endif%}
           </div>
           <div class="col-md-2 mb-3 mt-4">
             {{ form.form.is_buy.errors }}
