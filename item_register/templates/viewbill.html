@@ -18,62 +18,64 @@
           <div class="col-sm-4"></div>
         </div>
         <div class="row">
-          <table class="table table-striped border-bottom" style="font-size:12px;">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Date</th>
-                <th scope="col">Bill Number</th>
-                <th scope="col">Name</th>
-                <th scope="col">Amount</th>
-                <th scope="col">buy</th>
-                <th scope="col">remarks</th>
-                <th scope="col">Item</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Price</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for bill in object_list %}
-              <tr>
-                <th scope="row">{{forloop.counter}}</th>
-                {% for obj_list in bill.items.all%}
-                  {% if forloop.counter == 1%}
-                    <td>{{ bill.date }}</td>
-                    <td>{{ bill.bill_no }} </td>
-                    <td>{{bill.customer.name}}/{{bill.customer.father_or_husband_name}}</td>
-                    <td>{{bill.total_amount}}</td>
-                    {%if bill.is_buy %}
-                      <td><i class="fa fa-check" style="color:green"></i></td>
-                    {%else%}
+          <div class="table-responsive">
+            <table class="table table-striped border-bottom" style="font-size:12px;">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Bill Number</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">buy</th>
+                  <th scope="col">remarks</th>
+                  <th scope="col">Item</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Price</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for bill in object_list %}
+                <tr>
+                  <th scope="row">{{forloop.counter}}</th>
+                  {% for obj_list in bill.items.all%}
+                    {% if forloop.counter == 1%}
+                      <td>{{ bill.date }}</td>
+                      <td>{{ bill.bill_no }} </td>
+                      <td>{{bill.customer.name}}/{{bill.customer.father_or_husband_name}}</td>
+                      <td>{{bill.total_amount}}</td>
+                      {%if bill.is_buy %}
+                        <td><i class="fa fa-check" style="color:green"></i></td>
+                      {%else%}
+                        <td></td>
+                      {%endif%}
+                      <td>{{bill.remarks}}</td>
+                      <td>{{obj_list.item.name}} </td>
+                      <td>{{ obj_list.quantity}}</td>
+                      <td>{{obj_list.price}}</td>
+                      <td><span><i class="fa fa-trash" style="color:red" id='bill-{{bill.id}}' onclick="openform({{bill.id}})" data-url="{%url 'item:delete_bill' bill.id%}"></i></span></td>
+                    {% else %}
+                      <th></th>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td>{{obj_list.item.name}} </td>
+                      <td>{{ obj_list.quantity}}</td>
+                      <td>{{obj_list.price}}</td>
                       <td></td>
                     {%endif%}
-                    <td>{{bill.remarks}}</td>
-                    <td>{{obj_list.item.name}} </td>
-                    <td>{{ obj_list.quantity}}</td>
-                    <td>{{obj_list.price}}</td>
-                    <td><span><i class="fa fa-trash" style="color:red" id='bill-{{bill.id}}' onclick="openform({{bill.id}})" data-url="{%url 'item:delete_bill' bill.id%}"></i></span></td>
-                  {% else %}
-                    <th></th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>{{obj_list.item.name}} </td>
-                    <td>{{ obj_list.quantity}}</td>
-                    <td>{{obj_list.price}}</td>
-                    <td></td>
-                  {%endif%}
-                  </tr>
-                {%endfor%}
-              {% empty %}
-                  <tr><td>No Items yet.</td></tr>
-              {% endfor %}
-            </tbody>
-          </table>
+                    </tr>
+                  {%endfor%}
+                {% empty %}
+                    <tr><td>No Items yet.</td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
         <div class="row">
           <nav aria-label="...">

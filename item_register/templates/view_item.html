@@ -29,31 +29,33 @@
           </div>
         </div>
         <div class="row">
-          <table class="table table-striped" style="font-size:12px;">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">id</th>
-                <th scope="col">Name</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for item in object_list %}
+          <div class="table-responsive">
+            <table class="table table-striped" style="font-size:12px;">
+              <thead>
                 <tr>
-                  <th scope="row">{{forloop.counter}}</th>
-                  <td>{{ item.item_id }} </td>
-                  <td>{{ item.name }}</td>
-                  <td>
-                    <span id="edit-{{item.id}}" onclick="openform(1,{{item.id}})" data-url="{%url 'item:update' item.id%}" style="color:#FFA500;"><i class="fa fa-edit"></i></span>
-                    <!-- <a href="{%url 'item:delete' item.id%}"><i class="fa fa-trash-o"></i></a> -->
-                  </td>
+                  <th scope="col">#</th>
+                  <th scope="col">id</th>
+                  <th scope="col">Name</th>
+                  <th scope="col"></th>
                 </tr>
-              {% empty %}
-                  <tr>No Items yet.</tr>
-              {% endfor %}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {% for item in object_list %}
+                  <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{ item.item_id }} </td>
+                    <td>{{ item.name }}</td>
+                    <td>
+                      <span id="edit-{{item.id}}" onclick="openform(1,{{item.id}})" data-url="{%url 'item:update' item.id%}" style="color:#FFA500;"><i class="fa fa-edit"></i></span>
+                      <!-- <a href="{%url 'item:delete' item.id%}"><i class="fa fa-trash-o"></i></a> -->
+                    </td>
+                  </tr>
+                {% empty %}
+                    <tr>No Items yet.</tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
         <div class="row">
           <nav aria-label="...">

@@ -89,41 +89,43 @@
         </div>
         <div class="form-row">
           <div class="col-md-11">
-            <table class="table table-striped border-bottom" style="font-size:12px;">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Item</th>
-                  <th scope="col">Quantity</th>
-                  <th scope="col">Price</th>
-                  <th scope="col">amount</th>
-                  <th scope="col" colspan="2">  <span style="cursor:pointer;color:green" onclick="openwindow(0,0)">add item</th>
-                </tr>
-              </thead>
-              <tbody id="data">
-                {%for item in items %}
+            <div class="table-responsive">
+              <table class="table table-striped border-bottom" style="font-size:12px;">
+                <thead>
                   <tr>
-                    <th scope="row">{{forloop.counter}}</th>
-                    <td>{{item.item.name}}</td>
-                    <td>{{item.quantity}}</td>
-                    <td>{{item.price}}</td>
-                    <td></td>
-                    <td>
-                      <span style="cursor:pointer;color:green" onclick="openwindow(1,{{item.pk}})" id="{{item.pk}}-update" data-url="{%url 'item:edittempitem' item.pk %}">
-                        <i class="fa fa-edit"></i>
-                      </span>
-                    </td>
-                    <td>
-                      <span style="cursor:pointer;color:red" onclick="openwindow(2,{{item.pk}})" id="{{item.pk}}-delete" data-url="{%url 'item:deletetempitem' item.pk %}">
-                        <i class="fa fa-trash"></i>
-                      </span>
-                    </td>
+                    <th scope="col">#</th>
+                    <th scope="col">Item</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">amount</th>
+                    <th scope="col" colspan="2">  <span style="cursor:pointer;color:green" onclick="openwindow(0,0)">add item</th>
                   </tr>
-                {% empty %}
-                  <tr><th colspan="6" class="text-center text-info">No Items yet.</th></tr>
-                {% endfor %}
-              </tbody>
-            </table>
+                </thead>
+                <tbody id="data">
+                  {%for item in items %}
+                    <tr>
+                      <th scope="row">{{forloop.counter}}</th>
+                      <td>{{item.item.name}}</td>
+                      <td>{{item.quantity}}</td>
+                      <td>{{item.price}}</td>
+                      <td></td>
+                      <td>
+                        <span style="cursor:pointer;color:green" onclick="openwindow(1,{{item.pk}})" id="{{item.pk}}-update" data-url="{%url 'item:edittempitem' item.pk %}">
+                          <i class="fa fa-edit"></i>
+                        </span>
+                      </td>
+                      <td>
+                        <span style="cursor:pointer;color:red" onclick="openwindow(2,{{item.pk}})" id="{{item.pk}}-delete" data-url="{%url 'item:deletetempitem' item.pk %}">
+                          <i class="fa fa-trash"></i>
+                        </span>
+                      </td>
+                    </tr>
+                  {% empty %}
+                    <tr><th colspan="6" class="text-center text-info">No Items yet.</th></tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
         <div class="form-row mb-3 ml-1">

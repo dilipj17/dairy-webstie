@@ -18,41 +18,43 @@
           <div class="col-sm-4"></div>
         </div>
         <div class="row">
-          <table class="table table-striped border-bottom" style="font-size:12px;">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Date</th>
-                <th scope="col">Transection ID</th>
-                <th scope="col">Name</th>
-                <th scope="col">Credit</th>
-                <th scope="col">Debit</th>
-                <th scope="col">remarks</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for trans in object_list %}
-              <tr>
-                <th scope="row">{{forloop.counter}}</th>
-                    <td>{{ trans.date }}</td>
-                    <td>{{ trans.trans_id }} </td>
-                    <td>{{trans.customer.name}}/{{trans.customer.father_or_husband_name}}</td>
-                    {%if trans.credit %}
-                      <td style="color:green;">{{trans.amount}}</td>
-                      <td></td>
-                    {%else%}
-                      <td></td>
-                      <td class="text-danger">{{trans.amount}}</td>
-                    {%endif%}
-                    <td>{{trans.remarks}}</td>
-                    <td><span><i class="fa fa-trash" style="color:red" id='trans-{{trans.id}}' onclick="openform({{trans.id}})" data-url="{%url 'payment:delete' trans.id%}"></i></span></td>
-                  </tr>
-              {% empty %}
-                  <tr>No Transections yet.</tr>
-              {% endfor %}
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table class="table table-striped border-bottom" style="font-size:12px;">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Transection ID</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Credit</th>
+                  <th scope="col">Debit</th>
+                  <th scope="col">remarks</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for trans in object_list %}
+                <tr>
+                  <th scope="row">{{forloop.counter}}</th>
+                      <td>{{ trans.date }}</td>
+                      <td>{{ trans.trans_id }} </td>
+                      <td>{{trans.customer.name}}/{{trans.customer.father_or_husband_name}}</td>
+                      {%if trans.credit %}
+                        <td style="color:green;">{{trans.amount}}</td>
+                        <td></td>
+                      {%else%}
+                        <td></td>
+                        <td class="text-danger">{{trans.amount}}</td>
+                      {%endif%}
+                      <td>{{trans.remarks}}</td>
+                      <td><span><i class="fa fa-trash" style="color:red" id='trans-{{trans.id}}' onclick="openform({{trans.id}})" data-url="{%url 'payment:delete' trans.id%}"></i></span></td>
+                    </tr>
+                {% empty %}
+                    <tr>No Transections yet.</tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
         <div class="row">
           <nav aria-label="...">

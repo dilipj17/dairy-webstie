@@ -44,39 +44,41 @@
           </div>
         </div>
         <div class="row">
-          <table class="table table-striped border-bottom" style="font-size:12px;">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Date</th>
-                <th scope="col">ID</th>
-                <th scope="col">Remarks</th>
-                <th scope="col">Credit</th>
-                <th scope="col">Debit</th>
-                <th scope="col">Balance</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for trans in transection %}
+          <div class="table-responsive">
+            <table class="table table-striped border-bottom" style="font-size:12px;">
+              <thead>
                 <tr>
-                  <th scope="row">{{forloop.counter}}</th>
-                  <td>{{trans.date}}</td>
-                  <td>{{trans.trans_id}}</td>
-                  <td>{{trans.remarks}}</td>
-                  {%if trans.credit%}
-                    <td id="{{forloop.counter}}-amount" data-credit="1" data-amount='{{trans.amount}}' style="color:green">{{trans.amount}}</td>
-                    <td></td>
-                  {%else%}
-                    <td></td>
-                    <td id="{{forloop.counter}}-amount" data-credit="0" data-amount='{{trans.amount}}' style="color:red">{{trans.amount}}</td>
-                  {%endif%}
-                  <td id='{{forloop.counter}}-balance' style="color:green"></td>
+                  <th scope="col">#</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">ID</th>
+                  <th scope="col">Remarks</th>
+                  <th scope="col">Credit</th>
+                  <th scope="col">Debit</th>
+                  <th scope="col">Balance</th>
                 </tr>
-              {% empty %}
-                  <tr><td>No Transections yet.</td></tr>
-              {% endfor %}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {% for trans in transection %}
+                  <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{trans.date}}</td>
+                    <td>{{trans.trans_id}}</td>
+                    <td>{{trans.remarks}}</td>
+                    {%if trans.credit%}
+                      <td id="{{forloop.counter}}-amount" data-credit="1" data-amount='{{trans.amount}}' style="color:green">{{trans.amount}}</td>
+                      <td></td>
+                    {%else%}
+                      <td></td>
+                      <td id="{{forloop.counter}}-amount" data-credit="0" data-amount='{{trans.amount}}' style="color:red">{{trans.amount}}</td>
+                    {%endif%}
+                    <td id='{{forloop.counter}}-balance' style="color:green"></td>
+                  </tr>
+                {% empty %}
+                    <tr><td>No Transections yet.</td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
       <div class="col-sm-1"></div>
