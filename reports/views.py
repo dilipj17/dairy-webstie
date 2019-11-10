@@ -26,9 +26,10 @@ class LedgerQueryView(LoginRequiredMixin,FormView):
         id = formdata['customer_id']
         from_date = formdata['From']
         end_date = formdata['To']
-        if from_date > end_date:
-            messages.error(self.request,'from date should be less than to date')
-            return redirect('report:report')
+        if from_date != None and end_date != None :
+            if from_date > end_date:
+                messages.error(self.request,'from date should be less than to date')
+                return redirect('report:report')
         if Customer.objects.filter(cust_id = id).exists():
             customer = Customer.objects.get(cust_id = id)
             transection = Transections.objects.filter(customer=customer)
