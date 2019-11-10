@@ -12,48 +12,49 @@
       {{ form.non_field_errors }}
       <div class="form-row">
         <div class="col-md-4 mb-3">
-          {{ form.date.errors }}
           <label for="{{ form.date.id_for_label }}">Date</label>
           {{form.date}}
-          <div class="valid-tooltip">
-            Looks good!
-          </div>
+          {%if form.date.errors %}
+            <div class="invalid-tooltip" style="display:block">
+              {{ form.date.errors }}
+            </div>
+          {%endif%}
         </div>
         <div class="col-md-4 mb-3">
-          {{ form.trans_id.errors }}
           <label for="{{ form.trans_id.id_for_label }}">Transection ID</label>
           {{form.trans_id}}
-          <div class="valid-tooltip">
-            Looks good!
-          </div>
+          {%if form.trans_id.errors %}
+            <div class="invalid-tooltip" style="display:block">
+              {{ form.trans_id.errors }}
+            </div>
+          {%endif%}
         </div>
       </div>
       <div class="form-row">
         <div class="col-md-4 mb-3">
-          {{form.customer.errors}}
           <label for="id_customer">Customer Id</label>
           <input type="number" class="form-control" id="customer_id" required>
           <input type="hidden" name="customer" value="{{form.customer.value}}" id="id_customer">
-          <div class="valid-tooltip">
-            Looks good!
-          </div>
+          {%if form.customer.errors %}
+            <div class="invalid-tooltip" style="display:block">
+              {{ form.customer.errors }}
+            </div>
+          {%endif%}
         </div>
         <div class="col-md-4 mb-3">
           <label for="validationTooltip02">Customer Name</label>
           <input type="text" class="form-control" value="customer name" style="color:blue" id="customer_name" disabled>
-          <div class="valid-tooltip">
-            Looks good!
-          </div>
         </div>
       </div>
       <div class="form-row">
         <div class="col-md-4 mb-3">
-          {{ form.amount.errors }}
           <label for="{{ form.amount.id_for_label }}">Amount</label>
           {{form.amount}}
-          <div class="valid-tooltip">
-            Looks good!
-          </div>
+          {%if form.amount.errors %}
+            <div class="invalid-tooltip" style="display:block">
+              {{ form.amount.errors }}
+            </div>
+          {%endif%}
         </div>
         <div class="col-md-4 mt-4 ml-2">
           {{ form.credit.errors }}
@@ -66,12 +67,13 @@
       </div>
       <div class="form-row">
         <div class="col-md-8 mb-3">
-          {{ form.remarks.errors }}
           <label for="{{ form.remarks.id_for_label }}">Remarks</label>
           {{form.remarks}}
-          <div class="valid-tooltip">
-            Looks good!
-          </div>
+          {%if form.remarks.errors %}
+            <div class="invalid-tooltip" style="display:block">
+              {{ form.remarks.errors }}
+            </div>
+          {%endif%}
         </div>
       </div>
       <div class="form-row">
