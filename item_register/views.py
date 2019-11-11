@@ -96,8 +96,15 @@ class ViewBill(LoginRequiredMixin,ListView):
     template_name = 'viewbill.html'
 
     def get_context_data(self, **kwargs):
+        item = self.request.GET.get('item')
+        query = Bill.objects.all()
+        if item == None:
+            item = 0
+        if item == '1':
+            query = query.filter(is_buy = True)
+        elif item == '2':
+            query = query.filter(is_buy = False)
         context = super(ViewBill, self).get_context_data(**kwargs)
-        query = Bill.objects.all().order_by('date')
         paginator = Paginator(query, self.paginate_by)
         page = self.request.GET.get('page')
         try:
@@ -108,6 +115,7 @@ class ViewBill(LoginRequiredMixin,ListView):
             file_exams = paginator.page(paginator.num_pages)
 
         context['object_list'] = file_exams
+        context['active'] = item
         return context
 
 class DeleteBill(LoginRequiredMixin,DeleteView):

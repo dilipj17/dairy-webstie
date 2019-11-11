@@ -12,7 +12,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-1"></div>
-      <div class="col-sm-10">
+      <div class="col-sm-9">
         <div class="row mb-3">
           <div class="col-sm-4 text-muted"><h4> Bills</h4></div>
           <div class="col-sm-4"></div>
@@ -83,17 +83,27 @@
               {% for item in "x"|ljust:object_list.paginator.num_pages %}
                 {%if forloop.counter == object_list.number %}
                   <li class="page-item disabled">
-                    <a class="page-link" href="?page={{forloop.counter}}" tabindex="-1">{{forloop.counter}}</a>
+                    <a class="page-link" href="?page={{forloop.counter}}&item={{active}}" tabindex="-1">{{forloop.counter}}</a>
                   </li>
                 {%else%}
-                  <li class="page-item"><a class="page-link" href="?page={{forloop.counter}}">{{forloop.counter}}</a></li>
+                  <li class="page-item"><a class="page-link" href="?page={{forloop.counter}}&item={{active}}">{{forloop.counter}}</a></li>
                 {%endif%}
               {% endfor %}
             </ul>
           </nav>
         </div>
       </div>
-      <div class="col-sm-1"></div>
+      <div class="col-sm-2">
+        <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+          <div class="card-header">Filters</div>
+          <div class="card-body bg-white text-dark">
+            <h5 class="card-title">Buy</h5>
+            <a href="?item=0" class="card-text" style="cursor:pointer">All</a><br>
+            <a href="?item=1" class="card-text" style="cursor:pointer">Yes</a><br>
+            <a href="?item=2" class="card-text" style="cursor:pointer">No</a><br>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 {%endblock%}
