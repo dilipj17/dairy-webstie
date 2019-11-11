@@ -50,7 +50,7 @@
                       <td><span><i class="fa fa-trash" style="color:red" id='trans-{{trans.id}}' onclick="openform({{trans.id}})" data-url="{%url 'payment:delete' trans.id%}"></i></span></td>
                     </tr>
                 {% empty %}
-                    <tr>No Transections yet.</tr>
+                    <tr><td colspan="8" class="text-center">No Transections yet.</td></tr>
                 {% endfor %}
               </tbody>
             </table>
