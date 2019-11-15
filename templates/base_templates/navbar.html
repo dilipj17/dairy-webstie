@@ -36,16 +36,27 @@
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
   }
 </style>
-<nav class="navbar navbar-light mt-1">
-  <div class="container-fluid">
-    <a class="navbar-brand ml-5" href="{%url 'homepage'%}">
-      <span style="font-family:'Indie Flower';font-weight:bold;letter-spacing: 1px;color:green">Accounts Management</span>
-    </a>
+<nav class="navbar navbar-expand-lg navbar-light">
+  <a class="navbar-brand ml-5" href="{%url 'homepage'%}">
+    <span style="font-family:'Indie Flower';font-weight:bold;letter-spacing: 1px;color:green">Accounts Management</span>
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
     {% if request.user.is_authenticated %}
-    <ul class="nav navbar-nav navbar-right mr-5">
-      <li><a href="{%url 'password_change'%}"  style="font-family:'Indie Flower';font-weight:bold;color:blue;">Change Password</a></li>
-      <li><a href="{%url 'logout'%}"  style="font-family:'Indie Flower';font-weight:bold;color:blue;">Log Out</a></li>
-    </ul>
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item active">
+          <li><a href="{%url 'password_change'%}" class="nav-link" style="font-family:'Indie Flower';font-weight:bold;color:blue;">Change Password</a></li>
+        </li>
+        <li class="nav-item">
+          <li><a href="{%url 'logout'%}" class="nav-link" style="font-family:'Indie Flower';font-weight:bold;color:blue;">Log Out</a></li>
+        </li>
+      </ul>
     {% endif %}
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
   </div>
 </nav>
