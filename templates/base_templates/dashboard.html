@@ -136,7 +136,6 @@
             datatype: 'json',
             success: function(data){
               var model = JSON.parse(data);
-              console.log(model.responce);
               if (model.responce) {
                 $('#amount_output').html(model.amount);
                 document.getElementById('balance_output').placeholder = model.name

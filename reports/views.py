@@ -22,7 +22,6 @@ class LedgerQueryView(LoginRequiredMixin,FormView):
 
     def form_valid(self,form):
         formdata = form.cleaned_data
-        print(formdata)
         id = formdata['customer_id']
         from_date = formdata['From']
         end_date = formdata['To']
