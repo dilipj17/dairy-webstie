@@ -4,6 +4,8 @@ verify_ssl = true
 
 [requires]
 python_version = "3.6"
+
+[packages]
 Django = "2.2.6"
 pytz = "2019.3"
 sqlparse = "0.3.0"
